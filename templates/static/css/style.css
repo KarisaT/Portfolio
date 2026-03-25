@@ -1,0 +1,75 @@
+/* Global background with subtle gradient */
+/* Full-page gradient background */
+/* Strong full-page gradient background */
+body {
+  background: linear-gradient(135deg, #0d6efd, #6610f2, #20c997);
+  background-repeat: no-repeat;
+  background-attachment: fixed;   /* keeps gradient fixed while scrolling */
+  background-size: cover;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #212529; /* ensures text stays readable */
+}
+
+
+/* Hero image glow + hover effect */
+img.rounded-circle {
+  border: 5px solid #28a745;
+  box-shadow: 0 0 20px rgba(40, 167, 69, 0.7);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+img.rounded-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(40, 167, 69, 0.9);
+}
+
+/* Gradient headings */
+h1, h2 {
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* Buttons with animated hover */
+.btn {
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+/* Form field glow on focus */
+.form-control:focus {
+  border-color: #6610f2;
+  box-shadow: 0 0 10px rgba(102, 16, 242, 0.5);
+}
+
+/* Section fade-in animation */
+.container, .row {
+  animation: fadeInUp 1s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Flash message styling */
+.alert {
+  border-radius: 8px;
+  font-weight: 500;
+  animation: fadeIn 0.8s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
