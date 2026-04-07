@@ -5,106 +5,116 @@
   <title>Nahum Portfolio - Projects</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <style>
-  body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    background-attachment: fixed;
-    background-size: cover;
-    min-height: 100vh;
-    margin: 0;
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #f8f9fa;
-    line-height: 1.6;
-  }
+    body {
+      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364, #1a1a2e, #16213e);
+      background-size: 800% 800%;
+      animation: bgShift 20s ease infinite;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #f8f9fa;
+      line-height: 1.6;
+    }
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-  /* Glassmorphism card */
-  .glass-card, .project-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(14px);
-    border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-    animation: fadeInUp 1s ease both;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .glass-card:hover, .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0,255,153,0.25);
-  }
+    /* Glassmorphism header card */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 40px rgba(0,255,153,0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 60px rgba(0,255,153,0.4);
+    }
 
-  /* Profile image */
-  img.rounded-circle {
-    border: 4px solid #00ff99;
-    box-shadow: 0 0 25px rgba(0,255,153,0.7);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  img.rounded-circle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 45px rgba(0,255,153,0.9);
-  }
+    /* Headings */
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00ff99, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    h2 {
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
 
-  /* Headings */
-  h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-  }
-  h2 {
-    font-weight: 600;
-    color: #d1d1d1;
-    margin-bottom: 1rem;
-  }
+    /* Modern button */
+    .btn-modern {
+      background: linear-gradient(270deg, #00ff99, #00ccff);
+      background-size: 400% 400%;
+      animation: gradientShift 6s ease infinite;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 32px;
+      font-weight: 600;
+      color: #0f0f0f;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+    .btn-modern:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,255,153,0.6), 0 0 20px rgba(0,204,255,0.5);
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-  /* Modern button */
-  .btn-modern {
-    background: linear-gradient(135deg, #00ff99, #00ccff);
-    border: none;
-    border-radius: 50px;
-    padding: 12px 32px;
-    font-weight: 600;
-    color: #0f0f0f;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .btn-modern:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0,255,153,0.6);
-  }
-
-  /* Animation */
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    /* Project cards unified green theme */
+    .project-card {
+      background: rgba(0, 255, 153, 0.08);
+      border-left: 6px solid #00ff99;
+      border-radius: 15px;
+      padding: 24px;
+      margin: 30px 0;
+      box-shadow: 0 8px 24px rgba(0,255,153,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card strong a {
+      font-size: 1.2rem;
+      color: #f8f9fa;
+      text-decoration: none;
+    }
+    .project-card strong a:hover {
+      color: #00ffcc;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 36px rgba(0,255,153,0.6);
+    }
   </style>
 </head>
 <body>
   <!-- Projects Header -->
   <div class="container mt-5">
     <div class="glass-card">
-      <div class="row align-items-center">
-        <div class="col-md-4 text-center">
-          <img src="{{ url_for('static', filename='images/me.png') }}" 
-               alt="Nahum's profile photo" 
-               class="rounded-circle mb-4 shadow" 
-               width="200" height="200">
-        </div>
-        <div class="col-md-8">
-          <h1 class="fw-bold">Projects</h1>
-          <h2>Applications and Systems I’ve Built</h2>
-          <p class="lead">
-            Here’s a showcase of my practical web applications and systems, 
-            highlighting my transition into full-stack development and DevOps.
-          </p>
-
-          <!-- Navigation Buttons -->
-          <div class="mt-3 text-center">
-            <a href="{{ url_for('home') }}" class="btn-modern">Home</a>
-            <a href="{{ url_for('projects') }}" class="btn-modern ms-2">Projects</a>
-            <a href="{{ url_for('resume') }}" class="btn-modern ms-2">Resume</a>
-            <a href="{{ url_for('contact') }}" class="btn-modern ms-2">Contact</a>
-          </div>
-        </div>
+      <h1 class="fw-bold">Projects</h1>
+      <h2>Applications and Systems I’ve Built</h2>
+      <p class="lead">
+        Here’s a showcase of my practical web applications and systems, 
+        highlighting my transition into full-stack development and DevOps.
+      </p>
+      <div class="mt-3 text-center">
+        <a href="{{ url_for('home') }}" class="btn-modern">Home</a>
+        <a href="{{ url_for('projects') }}" class="btn-modern ms-2">Projects</a>
+        <a href="{{ url_for('resume') }}" class="btn-modern ms-2">Resume</a>
+        <a href="{{ url_for('contact') }}" class="btn-modern ms-2">Contact</a>
       </div>
     </div>
   </div>
@@ -116,11 +126,7 @@
     <h2 class="fw-bold mb-3 text-center">Featured Projects</h2>
 
     <div class="project-card">
-      <strong>
-           <a href="https://schoolapp-u997.onrender.com" target="_blank">
-          Sample School App
-        </a>
-      </strong>
+      <strong><a href="https://schoolapp-u997.onrender.com" target="_blank">Sample School App</a></strong>
       <ul>
         <li>Built with Flask, SQLite, and Bootstrap.</li>
         <li>Features attendance tracking, CRUD operations, and admin dashboard.</li>
@@ -129,11 +135,7 @@
     </div>
 
     <div class="project-card">
-      <strong>
-        <a href="https://portfolio-nahum.vercel.app" target="_blank">
-          Portfolio Website
-        </a>
-      </strong>
+      <strong><a href="https://portfolio-nahum.vercel.app" target="_blank">Portfolio Website</a></strong>
       <ul>
         <li>Flask + Bootstrap site showcasing resume and projects.</li>
         <li>Professional polish with clean templates and styling.</li>
@@ -142,9 +144,7 @@
     </div>
 
     <div class="project-card">
-      <strong> <a href="https://blogapp-samp.vercel.app/" target="_blank">
-          Sample Blogging Platform 
-</a>
+      <strong><a href="https://blogapp-samp.vercel.app/" target="_blank">Sample Blogging Platform</a></strong>
       <ul>
         <li>Flask & React full-stack app with user accounts, posts, and comments.</li>
         <li>Admin moderation and tagging system.</li>
@@ -152,19 +152,17 @@
       </ul>
     </div>
 
-    <!-- Upcoming Projects Section -->
     <h2 class="fw-bold mb-3 text-center">Upcoming Projects</h2>
-<div class="project-card">
-      <strong>
-          React Chat Application
-        </a>
-      </strong>
+
+    <div class="project-card">
+      <strong>React Chat Application</strong>
       <ul>
         <li>Real-time messaging with React and Flask.</li>
         <li>Message mapping, input handling, and responsive design.</li>
         <li>Lightweight browser-based setup for easy use.</li>
       </ul>
     </div>
+
     <div class="project-card">
       <strong>Task Manager</strong>
       <ul>
