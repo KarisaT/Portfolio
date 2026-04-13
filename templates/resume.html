@@ -2,203 +2,171 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nahum Portfolio - Resume</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume — Nahum Kiptoo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364, #1a1a2e, #16213e);
-      background-size: 800% 800%;
-      animation: bgShift 20s ease infinite;
-      min-height: 100vh;
-      margin: 0;
-      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #f8f9fa;
-      line-height: 1.7;
-    }
-    @keyframes bgShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;--surface:#fafaf8;--surface2:#f2f1ed;--gold:#c9a84c;--gold2:#e8c97a;--border:rgba(0,0,0,0.08)}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:linear-gradient(160deg,#fafaf8 0%,#f4f2ec 100%);background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");opacity:0.4}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--ink);text-decoration:none}
+    .nav-logo span{color:var(--gold)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-size:0.86rem;font-weight:500;color:var(--ink3);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color .2s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+    .nav-links a:hover,.nav-links a.active{color:var(--ink)}
+    .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    main{padding-top:64px;position:relative;z-index:1}
+    .page-header{max-width:1280px;margin:0 auto;padding:6rem 3.5rem 4rem;animation:fadeUp .9s .1s both}
+    .page-eyebrow{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+    .page-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+    .page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,5rem);letter-spacing:-0.02em;line-height:1.03;margin-bottom:1.25rem;font-weight:500}
+    .page-header .lead{font-size:1.08rem;color:var(--ink2);max-width:60ch;line-height:1.8;font-weight:300}
+    .divider{border:none;border-top:1px solid var(--border);max-width:1280px;margin:0 auto}
+    .content{max-width:1280px;margin:0 auto;padding:5rem 3.5rem;display:grid;grid-template-columns:2fr 1fr;gap:6rem}
+    .section-label{font-size:0.78rem;font-weight:600;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
+    .section-label::before{content:'';width:20px;height:1px;background:var(--gold)}
 
-    .glass-card {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 40px rgba(0,255,153,0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .glass-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 60px rgba(0,255,153,0.4);
-    }
+    /* Timeline */
+    .timeline{display:flex;flex-direction:column;gap:0}
+    .timeline-item{border-left:1px solid var(--border);padding:0 0 3rem 2.5rem;position:relative}
+    .timeline-item::before{content:'';position:absolute;left:-5px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--gold);border:2px solid var(--surface)}
+    .timeline-item:last-child{padding-bottom:0}
+    .timeline-org{font-size:0.72rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
+    .timeline-role{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--ink);margin-bottom:0.3rem;font-weight:500}
+    .timeline-dates{font-size:0.85rem;color:var(--ink3);margin-bottom:1rem;letter-spacing:0.02em}
+    .timeline-desc{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+    .timeline-desc li{font-size:0.93rem;color:var(--ink2);padding-left:1.25rem;position:relative;font-weight:400;line-height:1.65}
+    .timeline-desc li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:0.7rem;top:0.15em}
 
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-     background: linear-gradient(90deg, #00ccff, #00ccff);
-    -webkit-background-clip: text;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    h2 {
-      font-weight: 600;
-      color: #e0e0e0;
-      margin-bottom: 1rem;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    }
+    /* Sidebar */
+    .sidebar-section{margin-bottom:3.5rem}
+    .edu-item{border:1px solid var(--border);border-radius:3px;padding:1.5rem;margin-bottom:1rem;background:#fff;transition:box-shadow .2s}
+    .edu-item:hover{box-shadow:0 8px 24px rgba(0,0,0,0.05)}
+    .edu-course{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--ink);margin-bottom:0.25rem}
+    .edu-org{font-size:0.85rem;color:var(--ink3);letter-spacing:0.02em}
 
-    .btn-modern {
-      background: linear-gradient(270deg, #00ff99, #00ccff);
-      background-size: 400% 400%;
-      animation: gradientShift 6s ease infinite;
-      border: none;
-      border-radius: 50px;
-      padding: 12px 32px;
-      font-weight: 600;
-      color: #0f0f0f;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-      text-decoration: none;
-    }
-    .btn-modern:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(0,255,153,0.6), 0 0 20px rgba(0,204,255,0.5);
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    /* Skill bars */
+    .skills-list{display:flex;flex-direction:column;gap:1rem}
+    .skill-row{display:flex;flex-direction:column;gap:6px}
+    .skill-name{font-size:0.88rem;font-weight:500;color:var(--ink2);display:flex;justify-content:space-between}
+    .skill-bar{height:2px;background:var(--surface2);border-radius:1px;overflow:hidden}
+    .skill-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:1px;transform-origin:left;transform:scaleX(0);transition:transform 1s cubic-bezier(.22,1,.36,1)}
+    .skill-fill.animate{transform:scaleX(1)}
 
-    .resume-card {
-      background: rgba(0, 255, 153, 0.08);
-      border-left: 6px solid #00ff99;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
-      box-shadow: 0 8px 24px rgba(0,255,153,0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .resume-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 14px 36px rgba(0,255,153,0.6);
-    }
-    .resume-card strong {
-      color: #00ffcc;
-      font-weight: 700;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
-    .resume-card ul {
-      margin: 0;
-      padding-left: 1.2rem;
-    }
-    .resume-card li {
-      margin-bottom: 6px;
-    }
+    footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
+    @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header{padding-left:1.5rem;padding-right:1.5rem}.content{grid-template-columns:1fr;padding:3rem 1.5rem;gap:3rem}footer{flex-direction:column;gap:0.5rem}}
   </style>
 </head>
 <body>
-  <!-- Resume Header -->
-  <div class="container mt-5">
-    <div class="glass-card text-center">
-      <h1 class="fw-bold">Resume</h1>
-      <h2>Education, Skills, and Experience</h2>
-      <p class="lead">
-        Transitioning from executive IT support into DevOps and platform engineering, 
-        with expertise in cloud computing and DevOps workflows. Skilled in building secure, 
-        efficient applications that integrate cybersecurity and governance‑driven IT practices.
-      </p>
-      <div class="mt-3">
-        <a href="{{ url_for('home') }}" class="btn-modern">Home</a>
-        <a href="{{ url_for('projects') }}" class="btn-modern ms-2">Projects</a>
-        <a href="{{ url_for('resume') }}" class="btn-modern ms-2">Resume</a>
-        <a href="{{ url_for('contact') }}" class="btn-modern ms-2">Contact</a>
-      </div>
+  <nav>
+    <a href="{{ url_for('home') }}" class="nav-logo">N<span>K</span></a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('projects') }}">Projects</a></li>
+      <li><a href="{{ url_for('resume') }}" class="active">Resume</a></li>
+      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    </ul>
+  </nav>
+  <main>
+    <div class="page-header">
+      <div class="page-eyebrow">Resume</div>
+      <h1>Education, skills<br>&amp; experience</h1>
+      <p class="lead">Transitioning from executive IT support into DevOps and platform engineering — with expertise in cloud computing, cybersecurity, and governance-driven IT practices.</p>
     </div>
-  </div>
-
-  <hr class="my-5">
-
-  <!-- Education Section -->
-  <div class="container">
-    <h2 class="fw-bold mb-3 text-center">Education</h2>
-    <div class="resume-card">
-      <strong>Cybersecurity</strong><br>
-      Coursera, 2025 – 2026
-    </div>
-    <div class="resume-card">
-      <strong>DevOps</strong><br>
-      Coursera, 2024 – 2025
-    </div>
-    <div class="resume-card">
-      <strong>Information Technology</strong><br>
-      CPL, 2024 – 2025
-    </div>
-
-    <!-- Skills Section -->
-    <h2 class="fw-bold mb-3 text-center">Skills</h2>
-    <div class="row mb-4">
-      <div class="col-md-4">
-        <div class="resume-card">
-          <ul>
-            <li>Python & Flask</li>
-            <li>React & JavaScript</li>
-            <li>Defensive Security</li>
-          </ul>
+    <hr class="divider">
+    <div class="content reveal">
+      <div>
+        <div class="section-label">Experience</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-org">United Nations Nairobi</div>
+            <div class="timeline-role">Executive IT Support</div>
+            <div class="timeline-dates">2019 – 2025</div>
+            <ul class="timeline-desc">
+              <li>Provided troubleshooting, workflow optimization, and technical support for enterprise systems.</li>
+              <li>Implemented data governance, security, and compliance measures.</li>
+              <li>Led the Multifactor Authenticator project for secure access protocols.</li>
+            </ul>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-org">Agriculture and Food Authority</div>
+            <div class="timeline-role">IT Assistant</div>
+            <div class="timeline-dates">2017 – 2018</div>
+            <ul class="timeline-desc">
+              <li>System administration, data analytics, and cloud administration.</li>
+              <li>Troubleshooting LAN/WAN connectivity problems.</li>
+              <li>Configuring Cisco Routers and Switches.</li>
+            </ul>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-org">Self-employed</div>
+            <div class="timeline-role">Freelance Developer & IT Consultant</div>
+            <div class="timeline-dates">2025 – Present</div>
+            <ul class="timeline-desc">
+              <li>Building full-stack apps: school management systems, chat apps, and portfolio sites.</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="resume-card">
-          <ul>
-            <li>Linux & CLI Tools</li>
-            <li>Database Management (SQLite, PostgreSQL)</li>
-            <li>CI/CD Pipelines</li>
-          </ul>
+      <div>
+        <div class="sidebar-section">
+          <div class="section-label">Education</div>
+          <div class="edu-item">
+            <div class="edu-course">Cybersecurity</div>
+            <div class="edu-org">Coursera · 2025 – 2026</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-course">DevOps</div>
+            <div class="edu-org">Coursera · 2024 – 2025</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-course">Information Technology</div>
+            <div class="edu-org">CPL · 2024 – 2025</div>
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="section-label">Technical skills</div>
+          <div class="skills-list" id="skills">
+            <div class="skill-row"><span class="skill-name">Python & Flask</span><div class="skill-bar"><div class="skill-fill" data-width="92%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">React & JavaScript</span><div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Linux & CLI Tools</span><div class="skill-bar"><div class="skill-fill" data-width="88%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Defensive Security</span><div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">CI/CD Pipelines</span><div class="skill-bar"><div class="skill-fill" data-width="78%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Database (SQLite, PG)</span><div class="skill-bar"><div class="skill-fill" data-width="82%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Cloud Deployment</span><div class="skill-bar"><div class="skill-fill" data-width="75%"></div></div></div>
+          </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="resume-card">
-          <ul>
-            <li>Bootstrap & TailwindCSS</li>
-            <li>Git & GitHub</li>
-            <li>Cloud Deployment (Render, Vercel)</li>
-          </ul>
-        </div>
-      </div>
     </div>
-
-    <!-- Experience Section -->
-    <h2 class="fw-bold mb-3 text-center">Experience</h2>
-    <div class="resume-card">
-      <strong>Executive IT Support</strong><br>
-      United Nations Nairobi, 2019 – 2025<br>
-      <ul>
-        <li>Provided troubleshooting, workflow optimization, and technical support for enterprise systems.</li>
-        <li>Implemented data governance, security, and compliance measures.</li>
-        <li>Led the Multifactor Authenticator project for secure access protocols.</li>
-      </ul>
-    </div>
-    <div class="resume-card">
-      <strong>IT Assistant</strong><br>
-      Agriculture and Food Authority, 2017 – 2018<br>
-      <ul>
-        <li>System administration, data analytics, and cloud administration.</li>
-        <li>Troubleshooting LAN/WAN connectivity problems.</li>
-        <li>Configuring Cisco Routers and Switches.</li>
-      </ul>
-    </div>
-    <div class="resume-card">
-      <strong>Freelance Developer & IT Consultant</strong><br>
-      2025 – Present<br>
-      <ul>
-        <li>Building full-stack apps, including school management systems, chat apps, and portfolio sites.</li>
-      </ul>
-    </div>
-  </div>
+  </main>
+  <footer>
+    <span>Nahum Kiptoo — Portfolio</span>
+    <span>© 2026</span>
+  </footer>
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          // Animate skill bars
+          document.querySelectorAll('.skill-fill').forEach((el, i) => {
+            setTimeout(() => {
+              el.style.width = el.dataset.width;
+              el.classList.add('animate');
+            }, i * 80 + 300);
+          });
+        }
+      });
+    }, {threshold: 0.1});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
