@@ -133,6 +133,7 @@
       <li><a href="{{ url_for('home') }}" class="active">Home</a></li>
       <li><a href="{{ url_for('projects') }}">Projects</a></li>
       <li><a href="{{ url_for('resume') }}">Resume</a></li>
+      <li><a href="{{ url_for('blog') }}">Blog</a></li>
       <li><a href="{{ url_for('contact') }}">Contact</a></li>
     </ul>
   </nav>
@@ -140,9 +141,9 @@
   <main>
     <div class="hero">
       <div class="hero-left">
-        <div class="hero-eyebrow">DevOps · Cybersecurity · Consulting</div>
-        <h1>Building secure,<br><em>resilient</em><br>systems.</h1>
-        <p>8+ years shaping enterprise IT infrastructure — including Executive IT support at the United Nations in Nairobi. Governance-driven solutions, clean modern engineering.</p>
+        <div class="hero-eyebrow">DevOps · Cybersecurity · UN-Grade IT Support</div>
+        <h1>Enterprise IT,<br><em>zero-compromise</em><br>security.</h1>
+        <p>8+ years hardening infrastructure for organisations that can't afford downtime — including Executive IT support at the United Nations, Nairobi. I bring governance discipline to modern engineering.</p>
         <div class="cta-row">
           <a href="{{ url_for('projects') }}" class="btn-primary">View projects →</a>
           <a href="{{ url_for('contact') }}" class="btn-ghost">Get in touch</a>
@@ -167,9 +168,9 @@
         <h2 class="section-title">At a glance</h2>
       </div>
       <div class="stats-row">
-        <div class="stat"><div class="stat-num">CyberSecurity</div><div class="stat-label">Blue Team</div></div>
-        <div class="stat"><div class="stat-num">Sys Admin</div><div class="stat-label">Executive IT Support</div></div>
-        <div class="stat"><div class="stat-num">MERN Stack</div><div class="stat-label">Python, React & Security</div></div>
+        <div class="stat"><div class="stat-num">Cybersecurity</div><div class="stat-label">Blue Team · Threat Detection · Compliance</div></div>
+        <div class="stat"><div class="stat-num">Sys Admin</div><div class="stat-label">Executive IT Support · UN Nairobi</div></div>
+        <div class="stat"><div class="stat-num">Full-Stack</div><div class="stat-label">Flask · React · REST · CI/CD</div></div>
       </div>
     </div>
 
@@ -181,23 +182,21 @@
       <div class="skills-grid">
         <div class="skill-card">
           <div class="skill-icon">⚙</div>
-          <h3>DevOps Engineer</h3>
-          <p>Flask, React, REST APIs, and responsive UI design. End-to-end CI/CD pipeline delivery.</p>
-          <div class="tags"><span class="tag">Flask</span><span class="tag">React</span><span class="tag">REST APIs</span><span class="tag">CI/CD</span></div>
+          <h3>DevOps & Full-Stack Engineering</h3>
+          <p>Flask, React, REST APIs, and CI/CD pipelines. I build and ship end-to-end — from schema design to deployment on Render, Vercel, and Docker.</p>
+          <div class="tags"><span class="tag">Flask</span><span class="tag">React</span><span class="tag">Docker</span><span class="tag">CI/CD</span></div>
         </div>
         <div class="skill-card">
           <div class="skill-icon">🖥</div>
-          <h3>System Administration & Executive IT Support</h3>
-          <p>Linux & Windows administration </p>
-          <p>Governance-driven workflows.</p>
-          <p>Data Analytics</p>
-          <div class="tags"><span class="tag">Linux</span><span class="tag">Windows</span><span class="tag">Governance</span></div>
+          <h3>System Administration & Executive IT</h3>
+          <p>Linux & Windows server management, VPN, Active Directory, and helpdesk escalation — with UN-standard documentation, ticketing, and SLA compliance.</p>
+          <div class="tags"><span class="tag">Linux</span><span class="tag">Windows Server</span><span class="tag">Active Directory</span><span class="tag">ITIL</span></div>
         </div>
         <div class="skill-card">
           <div class="skill-icon">🔒</div>
-          <h3>Cybersecurity (BlueTeam)</h3>
-          <p>Secure coding practices, threat mitigation, and compliance-aligned infrastructure solutions.</p>
-          <div class="tags"><span class="tag">Threat mitigation</span><span class="tag">Compliance</span><span class="tag">Secure code</span></div>
+          <h3>Cybersecurity — Blue Team</h3>
+          <p>SIEM monitoring, log analysis, incident response, and secure-by-design coding. I align infrastructure with ISO 27001 and CIS Controls to stay audit-ready.</p>
+          <div class="tags"><span class="tag">SIEM</span><span class="tag">Incident Response</span><span class="tag">ISO 27001</span><span class="tag">CIS</span></div>
         </div>
       </div>
     </div>
@@ -205,8 +204,8 @@
     <div class="section reveal" style="padding-top:0">
       <div class="contact-strip">
         <div>
-          <h2>Let's build something together.</h2>
-          <p>Nairobi-based · Available for freelance & remote roles</p>
+          <h2>Ready to strengthen your stack?</h2>
+          <p>Nairobi-based · Available for freelance, contracts & remote roles</p>
         </div>
         <a href="{{ url_for('contact') }}" class="btn-gold">Start a conversation →</a>
       </div>
