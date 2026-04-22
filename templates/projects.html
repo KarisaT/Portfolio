@@ -8,53 +8,58 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;--surface:#fafaf8;--surface2:#f2f1ed;--gold:#c9a84c;--gold2:#e8c97a;--green:#0a8f5e;--border:rgba(0,0,0,0.08)}
+    :root{--ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;--surface:#fafaf8;--surface2:#f2f1ed;--gold:#c9a84c;--gold2:#e8c97a;--border:rgba(0,0,0,0.08)}
     html{scroll-behavior:smooth}
-    body{font-family:'Outfit',sans-serif;background:linear-gradient(160deg,#fafaf8 0%,#f4f2ec 100%);background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");opacity:0.4}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--ink);text-decoration:none}
-    .nav-logo span{color:var(--gold)}
+    body{font-family:'Outfit',sans-serif;background:#fafaf8;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");opacity:0.35}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--ink);text-decoration:none;display:flex;align-items:flex-start;gap:1px}
+    .nav-logo-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:4px;flex-shrink:0}
     .nav-links{display:flex;gap:2.5rem;list-style:none}
-    .nav-links a{font-size:0.86rem;font-weight:500;color:var(--ink3);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color .2s;position:relative}
-    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+    .nav-links a{font-size:0.82rem;font-weight:500;color:var(--ink3);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:color .2s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
     .nav-links a:hover,.nav-links a.active{color:var(--ink)}
     .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
     .reveal.visible{opacity:1;transform:translateY(0)}
     main{padding-top:64px;position:relative;z-index:1}
     .page-header{max-width:1280px;margin:0 auto;padding:6rem 3.5rem 4rem;animation:fadeUp .9s .1s both}
-    .page-eyebrow{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
-    .page-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
-    .page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,5rem);letter-spacing:-0.02em;line-height:1.03;margin-bottom:1.25rem;font-weight:500}
-    .page-header .lead{font-size:1.08rem;color:var(--ink2);max-width:56ch;line-height:1.8;font-weight:300}
+    .page-eyebrow{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;color:var(--gold);text-transform:uppercase;margin-bottom:1.1rem;display:flex;align-items:center;gap:12px}
+    .page-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
+    .page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,5rem);letter-spacing:-0.025em;line-height:1.03;margin-bottom:1.25rem;font-weight:500}
+    .page-header .lead{font-size:1.05rem;color:var(--ink2);max-width:56ch;line-height:1.85;font-weight:300}
     .divider{border:none;border-top:1px solid var(--border);max-width:1280px;margin:0 auto}
     .section{max-width:1280px;margin:0 auto;padding:5rem 3.5rem}
-    .section-label{font-size:0.78rem;font-weight:600;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
+    .section-label{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
     .section-label::before{content:'';width:20px;height:1px;background:var(--gold)}
-    .project-grid{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
-    .project-card{background:#fff;padding:2.5rem;transition:background .2s;box-shadow:0 2px 16px rgba(0,0,0,0.04);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
-    .project-card:hover{background:#fff}
+
+    /* Project grid */
+    .project-grid{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+    .project-card{background:#fff;padding:2.75rem;transition:background .15s;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center}
+    .project-card:hover{background:#fffdf8}
     .project-card.upcoming{background:transparent}
-    .project-card.upcoming:hover{background:rgba(255,255,255,0.5)}
-    .project-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--ink);margin-bottom:0.75rem;letter-spacing:-0.01em}
+    .project-card.upcoming:hover{background:rgba(255,255,255,0.6)}
+    .proj-left{}
+    .proj-kicker{font-size:0.7rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.5rem}
+    .project-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--ink);margin-bottom:0.9rem;letter-spacing:-0.01em}
     .project-title a{color:inherit;text-decoration:none;transition:color .2s}
     .project-title a:hover{color:var(--gold)}
-    .project-desc{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
-    .project-desc li{font-size:0.93rem;color:var(--ink2);padding-left:1.25rem;position:relative;font-weight:400;line-height:1.6}
-    .project-desc li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:0.7rem;top:0.15em}
-    .project-link{display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;padding:8px 18px;border:1px solid var(--border);border-radius:3px;transition:all .2s;letter-spacing:0.04em;text-transform:uppercase;flex-shrink:0;margin-top:4px}
+    .project-desc{list-style:none;display:flex;flex-direction:column;gap:0.45rem}
+    .project-desc li{font-size:0.9rem;color:var(--ink2);padding-left:1.3rem;position:relative;font-weight:300;line-height:1.65}
+    .project-desc li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:0.7rem;top:0.18em}
+    .project-link{display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;padding:9px 20px;border:1.5px solid var(--border);border-radius:3px;transition:all .2s;letter-spacing:0.06em;text-transform:uppercase;flex-shrink:0}
     .project-link:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-    .project-link.upcoming-badge{color:var(--ink3);cursor:default}
-    .project-link.upcoming-badge:hover{background:transparent;color:var(--ink3);border-color:var(--border)}
-    footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
+    .project-link.muted{color:var(--ink3);cursor:default}
+    .project-link.muted:hover{background:transparent;color:var(--ink3);border-color:var(--border)}
+
+    footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
     @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header,.section{padding-left:1.5rem;padding-right:1.5rem}.project-card{grid-template-columns:1fr}.project-link{justify-self:start}footer{flex-direction:column;gap:0.5rem}}
   </style>
 </head>
 <body>
   <nav>
-    <a href="{{ url_for('home') }}" class="nav-logo">N<span>K</span></a>
+    <a href="{{ url_for('home') }}" class="nav-logo">NK<span class="nav-logo-dot"></span></a>
     <ul class="nav-links">
       <li><a href="{{ url_for('home') }}">Home</a></li>
       <li><a href="{{ url_for('projects') }}" class="active">Projects</a></li>
@@ -63,6 +68,7 @@
       <li><a href="{{ url_for('contact') }}">Contact</a></li>
     </ul>
   </nav>
+
   <main>
     <div class="page-header">
       <div class="page-eyebrow">Portfolio</div>
@@ -70,37 +76,41 @@
       <p class="lead">A showcase of practical web applications and systems — highlighting my transition into full-stack development and DevOps.</p>
     </div>
     <hr class="divider">
+
     <div class="section reveal">
       <div class="section-label">Featured projects</div>
       <div class="project-grid">
         <div class="project-card">
-          <div>
+          <div class="proj-left">
+            <div class="proj-kicker">Flask · SQLite · Render</div>
             <div class="project-title"><a href="https://schoolapp-yii4.onrender.com" target="_blank">Sample School App</a></div>
             <ul class="project-desc">
-              <li>Built with Flask, SQLite, and Bootstrap.</li>
-              <li>Features attendance tracking, CRUD operations, and admin dashboard.</li>
-              <li>Deployed on Render for live use.</li>
+              <li>Built with Flask, SQLite, and Bootstrap — admin dashboard with full CRUD.</li>
+              <li>Features attendance tracking, exam management, and student records.</li>
+              <li>Deployed live on Render.</li>
             </ul>
           </div>
-          <a href="https://schoolapp-yii4.onrender.com" target="_blank" class="project-link">In Progress↗</a>
+          <a href="https://schoolapp-yii4.onrender.com" target="_blank" class="project-link">In Progress ↗</a>
         </div>
         <div class="project-card">
-          <div>
+          <div class="proj-left">
+            <div class="proj-kicker">Flask · Bootstrap · Vercel</div>
             <div class="project-title"><a href="https://traced-tech.vercel.app" target="_blank">Company Website</a></div>
             <ul class="project-desc">
               <li>Flask + Bootstrap site showcasing services and projects.</li>
-              <li>Professional polish with clean templates and styling.</li>
-              <li>Deployed on Vercel for fast hosting.</li>
+              <li>Professional polish with clean templates and responsive styling.</li>
+              <li>Deployed on Vercel for fast global hosting.</li>
             </ul>
           </div>
           <a href="https://traced-tech.vercel.app" target="_blank" class="project-link">Live ↗</a>
         </div>
         <div class="project-card">
-          <div>
+          <div class="proj-left">
+            <div class="proj-kicker">Flask · React · Render</div>
             <div class="project-title"><a href="https://blogapp-6x4g.onrender.com" target="_blank">Sample Blogging Platform</a></div>
             <ul class="project-desc">
-              <li>Flask & React full-stack app with user accounts, posts, and comments.</li>
-              <li>Admin moderation and tagging system.</li>
+              <li>Full-stack app with user accounts, posts, and comments.</li>
+              <li>Admin moderation panel and tagging system.</li>
               <li>Deployed on Render.</li>
             </ul>
           </div>
@@ -108,27 +118,28 @@
         </div>
       </div>
     </div>
+
     <div class="section reveal" style="padding-top:0">
       <div class="section-label">Upcoming projects</div>
       <div class="project-grid">
         <div class="project-card upcoming">
-          <div>
+          <div class="proj-left">
+            <div class="proj-kicker">React · Flask · WebSockets</div>
             <div class="project-title">React Chat Application</div>
             <ul class="project-desc">
-              <li>Real-time messaging with React and Flask.</li>
-              <li>Message mapping, input handling, and responsive design.</li>
-              <li>Lightweight browser-based setup for easy use.</li>
+              <li>Real-time messaging with React and Flask-SocketIO.</li>
+              <li>Message threading, input handling, and responsive design.</li>
             </ul>
           </div>
-          <span class="project-link upcoming-badge">In progress</span>
+          <span class="project-link muted">In progress</span>
         </div>
         <div class="project-card upcoming">
-          <div>
+          <div class="proj-left">
+            <div class="proj-kicker">Flask · Tailwind · Render</div>
             <div class="project-title"><a href="https://task-manager-qzx7.onrender.com" target="_blank">Task Manager</a></div>
             <ul class="project-desc">
               <li>Flask app with CRUD tasks, deadlines, and reminders.</li>
-              <li>Bootstrap/Tailwind styling for usability.</li>
-              <li>GitHub integration for version control.</li>
+              <li>Clean styling and GitHub integration for version control.</li>
             </ul>
           </div>
           <a href="https://task-manager-qzx7.onrender.com" target="_blank" class="project-link">In progress ↗</a>
@@ -136,10 +147,12 @@
       </div>
     </div>
   </main>
+
   <footer>
     <span>Nahum Karisa — Portfolio</span>
     <span>© 2026</span>
   </footer>
+
   <script>
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
