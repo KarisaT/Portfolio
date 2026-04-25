@@ -36,8 +36,8 @@
 
     /* Project grid */
     .project-grid{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
-    .project-card{background:#fff;padding:2.75rem;transition:background .15s;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center}
-    .project-card:hover{background:#fffdf8}
+    .project-card{background:var(--surface2);padding:2.75rem;transition:background .15s;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center}
+    .project-card:hover{background:var(--surface)}
     .project-card.upcoming{background:transparent}
     .project-card.upcoming:hover{background:rgba(255,255,255,0.6)}
     .proj-left{}
@@ -66,19 +66,7 @@
   </style>
 
   <script>
-
-    // Dark mode
-    const _toggle = document.getElementById('themeToggle');
-    const _root = document.documentElement;
-    const _saved = localStorage.getItem('theme') || 'light';
-    _root.setAttribute('data-theme', _saved);
-    if(_toggle) _toggle.textContent = _saved === 'dark' ? '☀️' : '🌙';
-    if(_toggle) _toggle.addEventListener('click', () => {
-      const next = _root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      _root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      _toggle.textContent = next === 'dark' ? '☀️' : '🌙';
-    });
+    // Apply saved theme instantly to prevent flash of wrong theme
     (function(){
       var saved = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', saved);
@@ -97,6 +85,21 @@
     </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
+  <script>
+    // Wire up theme toggle now that DOM exists
+    (function(){
+      var root = document.documentElement;
+      var toggle = document.getElementById('themeToggle');
+      var current = root.getAttribute('data-theme') || 'light';
+      if(toggle) toggle.textContent = current === 'dark' ? '☀️' : '🌙';
+      if(toggle) toggle.addEventListener('click', function(){
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
 
   <main>
     <div class="page-header">

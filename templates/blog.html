@@ -46,7 +46,7 @@
     .topic-tag:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
     /* Posts grid */
     .posts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
-    .post-card{background:#fff;border:1px solid var(--border);border-radius:4px;padding:2.25rem;transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+    .post-card{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2.25rem;transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column}
     [data-theme="dark"] .post-card{background:#181824}
     .post-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .35s}
     .post-card:hover{box-shadow:0 14px 48px rgba(0,0,0,0.07);transform:translateY(-3px)}
@@ -85,6 +85,21 @@
     </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
+  <script>
+    // Wire up theme toggle now that DOM exists
+    (function(){
+      var root = document.documentElement;
+      var toggle = document.getElementById('themeToggle');
+      var current = root.getAttribute('data-theme') || 'light';
+      if(toggle) toggle.textContent = current === 'dark' ? '☀️' : '🌙';
+      if(toggle) toggle.addEventListener('click', function(){
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
 
   <main>
     <div class="page-header">

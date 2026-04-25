@@ -52,7 +52,7 @@
 
     /* Sidebar */
     .sidebar-section{margin-bottom:3.5rem}
-    .edu-item{border:1px solid var(--border);border-radius:3px;padding:1.4rem 1.6rem;margin-bottom:0.85rem;background:#fff;transition:box-shadow .2s}
+    .edu-item{border:1px solid var(--border);border-radius:3px;padding:1.4rem 1.6rem;margin-bottom:0.85rem;background:var(--surface2);transition:box-shadow .2s}
     .edu-item:hover{box-shadow:0 6px 24px rgba(0,0,0,0.05)}
     .edu-course{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--ink);margin-bottom:0.2rem}
     .edu-org{font-size:0.82rem;color:var(--ink3)}
@@ -84,19 +84,7 @@
   </style>
 
   <script>
-
-    // Dark mode
-    const _toggle = document.getElementById('themeToggle');
-    const _root = document.documentElement;
-    const _saved = localStorage.getItem('theme') || 'light';
-    _root.setAttribute('data-theme', _saved);
-    if(_toggle) _toggle.textContent = _saved === 'dark' ? '☀️' : '🌙';
-    if(_toggle) _toggle.addEventListener('click', () => {
-      const next = _root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      _root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      _toggle.textContent = next === 'dark' ? '☀️' : '🌙';
-    });
+    // Apply saved theme instantly to prevent flash of wrong theme
     (function(){
       var saved = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', saved);
@@ -115,6 +103,21 @@
     </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
+  <script>
+    // Wire up theme toggle now that DOM exists
+    (function(){
+      var root = document.documentElement;
+      var toggle = document.getElementById('themeToggle');
+      var current = root.getAttribute('data-theme') || 'light';
+      if(toggle) toggle.textContent = current === 'dark' ? '☀️' : '🌙';
+      if(toggle) toggle.addEventListener('click', function(){
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
 
   <main>
     <div class="page-header">
