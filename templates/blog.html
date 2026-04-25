@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +9,24 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;--surface:#fafaf8;--surface2:#f2f1ed;--gold:#c9a84c;--gold2:#e8c97a;--border:rgba(0,0,0,0.08)}
+    [data-theme="dark"]{--ink:#e8e8f0;--ink2:#b8b8cc;--ink3:#7a7a90;--surface:#0e0e18;--surface2:#181824;--border:rgba(255,255,255,0.08);--gold:#d4a84c;--gold2:#e8c97a}
+    [data-theme="dark"] body{background:#0e0e18;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.08) 0%, transparent 60%)}
+    [data-theme="dark"] nav{background:rgba(14,14,24,0.92)}
+    [data-theme="dark"] .post-card{background:#181824}
     html{scroll-behavior:smooth}
-    body{font-family:'Outfit',sans-serif;background:#fafaf8;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden}
+    body{font-family:'Outfit',sans-serif;background:var(--surface);background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden;transition:background .3s,color .3s}
     body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");opacity:0.35}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:background .3s}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--ink);text-decoration:none;display:flex;align-items:flex-start;gap:1px}
     .nav-logo-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:4px;flex-shrink:0}
-    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
     .nav-links a{font-size:0.82rem;font-weight:500;color:var(--ink3);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:color .2s;position:relative}
     .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
     .nav-links a:hover,.nav-links a.active{color:var(--ink)}
     .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+    /* Dark mode toggle */
+    .theme-toggle{background:none;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;padding:7px 10px;display:flex;align-items:center;color:var(--ink3);font-size:1rem;transition:all .2s;flex-shrink:0;margin-left:1.5rem}
+    .theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
     @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
     .reveal.visible{opacity:1;transform:translateY(0)}
@@ -33,15 +40,14 @@
     .section{max-width:1280px;margin:0 auto;padding:5rem 3.5rem}
     .section-label{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
     .section-label::before{content:'';width:20px;height:1px;background:var(--gold)}
-
     /* Topics */
     .topics-row{display:flex;flex-wrap:wrap;gap:8px}
     .topic-tag{font-size:0.76rem;font-weight:500;padding:7px 14px;border-radius:2px;background:var(--surface2);color:var(--ink2);letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--border);cursor:pointer;transition:all .2s}
     .topic-tag:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-
     /* Posts grid */
     .posts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
     .post-card{background:#fff;border:1px solid var(--border);border-radius:4px;padding:2.25rem;transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+    [data-theme="dark"] .post-card{background:#181824}
     .post-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .35s}
     .post-card:hover{box-shadow:0 14px 48px rgba(0,0,0,0.07);transform:translateY(-3px)}
     .post-card:hover::before{transform:scaleX(1)}
@@ -51,11 +57,16 @@
     .post-category{font-size:0.72rem;font-weight:500;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;background:var(--surface2);border-radius:2px}
     .post-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--ink);margin-bottom:0.75rem;letter-spacing:-0.01em;line-height:1.22}
     .post-excerpt{font-size:0.88rem;color:var(--ink2);line-height:1.8;font-weight:300;flex:1}
+    /* Expandable full content */
+    .post-full{display:none;font-size:0.88rem;color:var(--ink2);line-height:1.9;font-weight:300;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+    .post-full.open{display:block;animation:fadeUp .35s ease both}
+    .post-full p{margin-bottom:0.85rem}
+    .post-full p:last-child{margin-bottom:0}
     .post-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
     .post-read{font-size:0.76rem;color:var(--ink3);font-weight:400}
-    .post-link{font-size:0.78rem;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border:1.5px solid var(--border);border-radius:3px;transition:all .2s}
+    .post-link{font-size:0.78rem;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border:1.5px solid var(--border);border-radius:3px;transition:all .2s;cursor:pointer;background:none;font-family:'Outfit',sans-serif}
     .post-link:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-
+    .post-link.expanded{background:var(--surface2);border-color:var(--border)}
     footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
     footer a{color:var(--ink3);text-decoration:none;transition:color .2s}
     footer a:hover{color:var(--ink)}
@@ -72,6 +83,7 @@
       <li><a href="{{ url_for('blog') }}" class="active">Blog</a></li>
       <li><a href="{{ url_for('contact') }}">Contact</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
 
   <main>
@@ -88,17 +100,18 @@
         <span class="topic-tag">Blue Team</span>
         <span class="topic-tag">Linux Administration</span>
         <span class="topic-tag">DevOps</span>
-        <span class="topic-tag">Flask & Python</span>
-        <span class="topic-tag">SIEM & Monitoring</span>
-        <span class="topic-tag">Governance & Compliance</span>
+        <span class="topic-tag">Flask &amp; Python</span>
+        <span class="topic-tag">SIEM &amp; Monitoring</span>
+        <span class="topic-tag">Governance &amp; Compliance</span>
         <span class="topic-tag">Career</span>
-        <span class="topic-tag">Tools & Workflow</span>
+        <span class="topic-tag">Tools &amp; Workflow</span>
       </div>
     </div>
 
     <div class="section reveal" style="padding-top:0">
       <div class="section-label">Latest posts</div>
       <div class="posts-grid">
+
         <div class="post-card">
           <div class="post-meta">
             <span class="post-date">Apr 2026</span>
@@ -107,11 +120,17 @@
           </div>
           <div class="post-title">Setting up a home SIEM on a $0 budget</div>
           <div class="post-excerpt">You don't need a SOC licence to start practising threat detection. I walk through spinning up Wazuh on a spare Linux box, ingesting logs from three endpoints, and writing your first detection rule — start to finish in an afternoon.</div>
+          <div class="post-full" id="post-full-1">
+            <p>The first thing most people get wrong is overcomplicating the architecture. You don't need a dedicated server farm — a $35 Raspberry Pi or an old laptop running Ubuntu will handle Wazuh's manager node for a home lab just fine.</p>
+            <p>Start by installing Wazuh Manager via the official script, then point your endpoints (Windows, Linux, or macOS) at it using the lightweight agent. Within minutes you'll have system logs, authentication events, and file integrity monitoring flowing in.</p>
+            <p>The real value comes from writing custom rules. Wazuh's XML-based rule engine lets you define alerts like "three failed SSH logins within 60 seconds from the same IP" — classic brute-force detection, built in under an hour. From there, wire up a free Elastic stack for dashboards and you have a genuinely useful home SOC.</p>
+          </div>
           <div class="post-footer">
             <span class="post-read">8 min read</span>
-            <a href="#" class="post-link">Read →</a>
+            <button class="post-link" onclick="togglePost('post-full-1', this)">Read more ↓</button>
           </div>
         </div>
+
         <div class="post-card">
           <div class="post-meta">
             <span class="post-date">Mar 2026</span>
@@ -120,11 +139,17 @@
           </div>
           <div class="post-title">CI/CD for solo developers: stop deploying by hand</div>
           <div class="post-excerpt">A GitHub Actions workflow that tests your Flask app, builds a Docker image, and pushes to Render on every merge to main. The whole thing fits in 40 lines of YAML and takes about an hour to wire up.</div>
+          <div class="post-full" id="post-full-2">
+            <p>Manual deployments are a tax you pay every single time you ship. Even if it takes only five minutes, those five minutes are high-anxiety, easy-to-mess-up, and completely unnecessary once you automate them.</p>
+            <p>The workflow I use has three jobs: test (run pytest), build (docker buildx), and deploy (call Render's deploy hook via curl). Each job only runs if the previous one passes, so a failing test literally cannot reach production. The whole file is under 45 lines of YAML.</p>
+            <p>The key insight: store your Render deploy hook URL as a GitHub Actions secret, and your entire CD pipeline costs you $0. Combined with Render's free tier for side projects, you have proper CI/CD for a solo hobby app at no cost whatsoever.</p>
+          </div>
           <div class="post-footer">
             <span class="post-read">6 min read</span>
-            <a href="#" class="post-link">Read →</a>
+            <button class="post-link" onclick="togglePost('post-full-2', this)">Read more ↓</button>
           </div>
         </div>
+
         <div class="post-card">
           <div class="post-meta">
             <span class="post-date">Feb 2026</span>
@@ -133,11 +158,17 @@
           </div>
           <div class="post-title">What UN IT taught me about documentation</div>
           <div class="post-excerpt">The United Nations runs on tickets, change requests, and audit trails. After supporting executive-level users for years under those constraints, I came away with habits that make every IT role easier.</div>
+          <div class="post-full" id="post-full-3">
+            <p>When your users include senior diplomats and department heads, ambiguity is not an option. Every change I made required a change request with a rollback plan. Every incident required a root-cause writeup. At first this felt bureaucratic. Eventually it felt like professional hygiene.</p>
+            <p>The habit that stuck most: write your ticket as if you'll be explaining the situation to yourself in six months. Because you will be. "User can't log in" is useless. "User jsmith reports intermittent Outlook authentication failure since 14 Feb; reproduced on primary workstation, not on web client; AD account unlocked at 09:42 UTC" is actionable.</p>
+            <p>Good documentation also builds trust. When an executive escalates an issue, being able to pull up a timestamped, complete record of every action taken is the difference between a 10-minute resolution and a two-hour war room. Document as you go — not after.</p>
+          </div>
           <div class="post-footer">
             <span class="post-read">5 min read</span>
-            <a href="#" class="post-link">Read →</a>
+            <button class="post-link" onclick="togglePost('post-full-3', this)">Read more ↓</button>
           </div>
         </div>
+
         <div class="post-card">
           <div class="post-meta">
             <span class="post-date">Jan 2026</span>
@@ -146,11 +177,19 @@
           </div>
           <div class="post-title">10 cron jobs every sysadmin should be running</div>
           <div class="post-excerpt">Disk-space alerts, log rotation, automated backups, and certificate expiry checks — the small scheduled tasks that stop midnight calls. Copy-paste ready, with notes on what each one actually does.</div>
+          <div class="post-full" id="post-full-4">
+            <p>The best cron jobs are invisible — they silently prevent disasters you never know about. Here are the ones I install on every server I manage from day one.</p>
+            <p><strong>Disk space alert:</strong> <code>df -h | awk '$5+0>85{print}' | mail -s "Disk warning" admin@example.com</code> — runs hourly. If any filesystem hits 85% you hear about it before users do.</p>
+            <p><strong>SSL cert expiry check:</strong> <code>echo | openssl s_client -connect yourdomain.com:443 2>/dev/null | openssl x509 -noout -dates</code> piped through a date-comparison script — runs weekly. Expired certs cause user-facing outages that are completely avoidable.</p>
+            <p><strong>Database backup:</strong> <code>pg_dump mydb | gzip > /backups/mydb-$(date +%F).sql.gz</code> — nightly, with a 30-day retention cleanup job alongside it. Combine with rclone to push to cloud storage for off-site redundancy.</p>
+            <p>The remaining seven cover log rotation hygiene, temp-file cleanup, uptime reporting, and a weekly reboot window for patch application. Each one has prevented at least one incident in my career.</p>
+          </div>
           <div class="post-footer">
             <span class="post-read">7 min read</span>
-            <a href="#" class="post-link">Read →</a>
+            <button class="post-link" onclick="togglePost('post-full-4', this)">Read more ↓</button>
           </div>
         </div>
+
       </div>
     </div>
   </main>
@@ -161,6 +200,29 @@
   </footer>
 
   <script>
+    // ── Dark mode ──
+    const toggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme') || 'light';
+    root.setAttribute('data-theme', saved);
+    toggle.textContent = saved === 'dark' ? '☀️' : '🌙';
+
+    toggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    // ── Expand/collapse posts ──
+    function togglePost(id, btn) {
+      const el = document.getElementById(id);
+      const isOpen = el.classList.toggle('open');
+      btn.textContent = isOpen ? 'Show less ↑' : 'Read more ↓';
+      btn.classList.toggle('expanded', isOpen);
+    }
+
+    // ── Reveal on scroll ──
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
     }, {threshold: 0.1});

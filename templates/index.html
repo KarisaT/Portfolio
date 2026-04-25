@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,7 @@
         radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.07) 0%, transparent 60%),
         radial-gradient(ellipse 50% 40% at 85% 90%, rgba(201,168,76,0.04) 0%, transparent 60%);
       background-attachment:fixed;
-      color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden;
+      color:var(--ink);min-height:100vh;transition:background .3s,color .3s;line-height:1.65;overflow-x:hidden;
     }
     body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
@@ -125,7 +125,35 @@
       footer{flex-direction:column;gap:0.5rem;text-align:center;padding:2rem 1.5rem}
       nav{padding:0 1.5rem}.nav-links{gap:1.5rem}
     }
+  
+    [data-theme="dark"]{--ink:#e8e8f0;--ink2:#b8b8cc;--ink3:#7a7a90;--surface:#0e0e18;--surface2:#181824;--border:rgba(255,255,255,0.08);--gold:#d4a84c;--gold2:#e8c97a}
+    [data-theme="dark"] body{background:#0e0e18 !important;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.08) 0%, transparent 60%) !important}
+    [data-theme="dark"] nav{background:rgba(14,14,24,0.92) !important}
+    [data-theme="dark"] .post-card,[data-theme="dark"] .skill-card,[data-theme="dark"] .stat,[data-theme="dark"] .card{background:#181824 !important}
+    body{transition:background .3s,color .3s}
+    .theme-toggle{background:none;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;padding:7px 10px;display:flex;align-items:center;color:var(--ink3);font-size:1rem;transition:all .2s;flex-shrink:0;margin-left:1.5rem}
+    .theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
   </style>
+
+  <script>
+
+    // Dark mode
+    const _toggle = document.getElementById('themeToggle');
+    const _root = document.documentElement;
+    const _saved = localStorage.getItem('theme') || 'light';
+    _root.setAttribute('data-theme', _saved);
+    if(_toggle) _toggle.textContent = _saved === 'dark' ? '☀️' : '🌙';
+    if(_toggle) _toggle.addEventListener('click', () => {
+      const next = _root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      _root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      _toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+    (function(){
+      var saved = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
 </head>
 <body>
   <nav id="navbar">
@@ -137,6 +165,7 @@
       <li><a href="{{ url_for('blog') }}">Blog</a></li>
       <li><a href="{{ url_for('contact') }}">Contact</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
 
   <main>
