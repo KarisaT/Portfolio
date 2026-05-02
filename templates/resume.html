@@ -71,6 +71,23 @@
       transition:width 1.1s cubic-bezier(.22,1,.36,1);
     }
 
+    /* Certifications */
+    .cert-list{display:flex;flex-direction:column;gap:0}
+    .cert-item{padding:0.85rem 0;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:0.3rem}
+    .cert-item:first-child{border-top:1px solid var(--border)}
+    .cert-top{display:flex;align-items:center;justify-content:space-between;gap:0.5rem}
+    .cert-name{font-size:0.88rem;font-weight:500;color:var(--ink)}
+    .cert-meta{font-size:0.78rem;color:var(--ink3)}
+    .cert-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0}
+    .cert-security{background:rgba(201,168,76,0.12);color:var(--gold)}
+    .cert-network{background:rgba(100,140,200,0.1);color:#6b9bd2}
+    .cert-cloud{background:rgba(130,100,200,0.1);color:#9b82d4}
+    .cert-compliance{background:rgba(100,180,140,0.1);color:#5baa82}
+    [data-theme="dark"] .cert-security{background:rgba(201,168,76,0.15)}
+    [data-theme="dark"] .cert-network{background:rgba(100,140,200,0.15)}
+    [data-theme="dark"] .cert-cloud{background:rgba(130,100,200,0.15)}
+    [data-theme="dark"] .cert-compliance{background:rgba(100,180,140,0.15)}
+
     footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
     @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header{padding-left:1.5rem;padding-right:1.5rem}.content{grid-template-columns:1fr;padding:3rem 1.5rem;gap:3rem}footer{flex-direction:column;gap:0.5rem}}
   
@@ -345,6 +362,56 @@
             </div>
           </div>
         </div>
+
+        <div class="sidebar-section">
+          <div class="section-label">Certifications</div>
+          <div class="cert-list">
+
+            <div class="cert-item">
+              <div class="cert-top">
+                <span class="cert-name">CompTIA Security+</span>
+                <span class="cert-tag cert-security">Security</span>
+              </div>
+              <div class="cert-meta">CompTIA · Cybrary</div>
+            </div>
+
+            <div class="cert-item">
+              <div class="cert-top">
+                <span class="cert-name">Cisco CCNA</span>
+                <span class="cert-tag cert-network">Networking</span>
+              </div>
+              <div class="cert-meta">AFRALTI, Nairobi · 2018</div>
+            </div>
+
+            <div class="cert-item">
+              <div class="cert-top">
+                <span class="cert-name">PCI/DSS</span>
+                <span class="cert-tag cert-compliance">Compliance</span>
+              </div>
+              <div class="cert-meta">Cybrary · 2016</div>
+            </div>
+
+            <div class="cert-item">
+              <div class="cert-top">
+                <span class="cert-name">CompTIA Linux+</span>
+                <span class="cert-tag cert-network">Linux</span>
+              </div>
+              <div class="cert-meta">CompTIA · Cybrary · 2015</div>
+            </div>
+
+            <div class="cert-item">
+              <div class="cert-top">
+                <span class="cert-name">NCC Level 4 Computing</span>
+                <span class="cert-tag cert-cloud">Diploma</span>
+              </div>
+              <div class="cert-meta">NCC Education · 2017</div>
+            </div>
+
+
+
+          </div>
+        </div>
+
       </div>
     </div>
   </main>
