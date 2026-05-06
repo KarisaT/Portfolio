@@ -1,15 +1,16 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mail import Mail, Message
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # Needed for flash messages
+app.secret_key = os.environ.get('SECRET_KEY', 'change-me-in-production')  # Needed for flash messages
 
 # Configure Flask-Mail (replace with your own email + app password)
 app.config['MAIL_SERVER'] = 'smtp.office365.com'   # Outlook SMTP server
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'toyacharo@outlook.com'   # <-- your Outlook email
-app.config['MAIL_PASSWORD'] = 'your_app_password'       # <-- your Outlook app password
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', '')   # <-- your Outlook email
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')       # <-- your Outlook app password
 
 mail = Mail(app)
 
@@ -49,7 +50,7 @@ def send_message():
         # Construct the email
         msg = Message("New Contact Form Message",
                       sender=app.config['MAIL_USERNAME'],   # must be your own email
-                      recipients=["toyacharo@outlook.com"]) # where you want to receive messages
+                      recipients=[os.environ.get('MAIL_USERNAME', 'toyacharo@outlook.com')]) # where you want to receive messages
         msg.body = f"From: {name} <{email}>\n\n{message}"
 
         # Send the email
