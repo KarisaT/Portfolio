@@ -8,15 +8,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;--surface:#fafaf8;--surface2:#f2f1ed;--gold:#c9a84c;--gold2:#e8c97a;--border:rgba(0,0,0,0.08)}
-    [data-theme="dark"]{--ink:#e8e8f0;--ink2:#b8b8cc;--ink3:#7a7a90;--surface:#0e0e18;--surface2:#181824;--border:rgba(255,255,255,0.08);--gold:#d4a84c;--gold2:#e8c97a}
-    [data-theme="dark"] body{background:#0e0e18;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.08) 0%, transparent 60%)}
-    [data-theme="dark"] nav{background:rgba(14,14,24,0.92)}
-    [data-theme="dark"] .post-card{background:#181824}
+    :root{
+      --ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;
+      --surface:#fafaf8;--surface2:#f2f1ed;
+      --gold:#c9a84c;--gold2:#e8c97a;
+      --green:#0a8f5e;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+    }
+    [data-theme="dark"]{
+      --ink:#e8e8f0;--ink2:#b8b8cc;--ink3:#7a7a90;
+      --surface:#0e0e18;--surface2:#181824;
+      --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+      --gold:#d4a84c;--gold2:#e8c97a;
+    }
     html{scroll-behavior:smooth}
-    body{font-family:'Outfit',sans-serif;background:var(--surface);background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden;transition:background .3s,color .3s}
-    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");opacity:0.35}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:background .3s}
+    body{font-family:'Outfit',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden;transition:background .3s,color .3s;
+      background-image:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(201,168,76,0.06) 0%,transparent 60%);
+      background-attachment:fixed;
+    }
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.35;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");}
+
+    /* Nav */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:box-shadow .3s,background .3s}
+    [data-theme="dark"] nav{background:rgba(14,14,24,0.92)}
+    nav.scrolled{box-shadow:0 4px 32px rgba(0,0,0,0.06)}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--ink);text-decoration:none;display:flex;align-items:flex-start;gap:1px}
     .nav-logo-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:4px;flex-shrink:0}
     .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
@@ -24,188 +39,281 @@
     .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
     .nav-links a:hover,.nav-links a.active{color:var(--ink)}
     .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
-    /* Dark mode toggle */
     .theme-toggle{background:none;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;padding:7px 10px;display:flex;align-items:center;color:var(--ink3);font-size:1rem;transition:all .2s;flex-shrink:0;margin-left:1.5rem}
     .theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:6px;border-radius:3px;flex-shrink:0;margin-left:0.75rem}
+    .hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);transition:transform .3s,opacity .3s,width .3s;transform-origin:center}
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0;width:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mobile-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(250,250,248,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);z-index:190;padding:1.5rem;flex-direction:column;gap:0}
+    [data-theme="dark"] .mobile-drawer{background:rgba(14,14,24,0.97)}
+    .mobile-drawer.open{display:flex}
+    .mobile-drawer a{display:block;font-size:0.9rem;font-weight:500;color:var(--ink3);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 0;border-bottom:1px solid var(--border);transition:color .2s}
+    .mobile-drawer a:last-child{border-bottom:none}
+    .mobile-drawer a:hover,.mobile-drawer a.active{color:var(--ink)}
+
     @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes shimmer{0%,100%{opacity:1}50%{opacity:0.5}}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
     .reveal.visible{opacity:1;transform:translateY(0)}
+
     main{padding-top:64px;position:relative;z-index:1}
-    .page-header{max-width:1280px;margin:0 auto;padding:6rem 3.5rem 4rem;animation:fadeUp .9s .1s both}
+    .page-header{max-width:1280px;margin:0 auto;padding:6rem 3.5rem 3rem;animation:fadeUp .9s .1s both}
     .page-eyebrow{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;color:var(--gold);text-transform:uppercase;margin-bottom:1.1rem;display:flex;align-items:center;gap:12px}
     .page-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
     .page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,5rem);letter-spacing:-0.025em;line-height:1.03;margin-bottom:1.25rem;font-weight:500}
     .page-header .lead{font-size:1.05rem;color:var(--ink2);max-width:56ch;line-height:1.85;font-weight:300}
     .divider{border:none;border-top:1px solid var(--border);max-width:1280px;margin:0 auto}
-    .section{max-width:1280px;margin:0 auto;padding:5rem 3.5rem}
-    .section-label{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
+
+    /* Write button in header */
+    .header-actions{display:flex;align-items:center;gap:12px;margin-top:2rem;flex-wrap:wrap}
+    .btn-write{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:12px 24px;border-radius:3px;font-size:0.85rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;border:none;cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif}
+    .btn-write:hover{background:var(--gold);color:var(--ink)}
+    .btn-ghost-sm{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--ink3);padding:11px 20px;border-radius:3px;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;border:1.5px solid var(--border);cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif}
+    .btn-ghost-sm:hover{border-color:var(--ink2);color:var(--ink)}
+
+    /* Section */
+    .section{max-width:1280px;margin:0 auto;padding:4rem 3.5rem}
+    .section-label{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:10px}
     .section-label::before{content:'';width:20px;height:1px;background:var(--gold)}
+
     /* Topics */
-    .topics-row{display:flex;flex-wrap:wrap;gap:8px}
-    .topic-tag{font-size:0.76rem;font-weight:500;padding:7px 14px;border-radius:2px;background:var(--surface2);color:var(--ink2);letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--border);cursor:pointer;transition:all .2s}
-    .topic-tag:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .topics-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:0}
+    .topic-tag{font-size:0.74rem;font-weight:500;padding:7px 14px;border-radius:2px;background:var(--surface2);color:var(--ink2);letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--border);cursor:pointer;transition:all .2s;user-select:none}
+    .topic-tag:hover{border-color:var(--ink2);color:var(--ink)}
+    .topic-tag.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
     /* Posts grid */
     .posts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
-    .post-card{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2.25rem;transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+    .post-card{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:2.25rem;transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+    .post-card.hidden{display:none}
     [data-theme="dark"] .post-card{background:#181824}
     .post-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .35s}
-    .post-card:hover{box-shadow:0 14px 48px rgba(0,0,0,0.07);transform:translateY(-3px)}
+    .post-card:hover{box-shadow:0 14px 48px rgba(0,0,0,0.07);transform:translateY(-2px)}
     .post-card:hover::before{transform:scaleX(1)}
-    .post-meta{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+    .post-meta{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap}
     .post-date{font-size:0.72rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase}
-    .post-dot{width:3px;height:3px;border-radius:50%;background:var(--ink3)}
-    .post-category{font-size:0.72rem;font-weight:500;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;background:var(--surface2);border-radius:2px}
-    .post-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--ink);margin-bottom:0.75rem;letter-spacing:-0.01em;line-height:1.22}
+    .post-dot{width:3px;height:3px;border-radius:50%;background:var(--ink3);flex-shrink:0}
+    .post-category{font-size:0.7rem;font-weight:500;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;background:var(--surface2);border-radius:2px;border:1px solid var(--border)}
+    .ai-badge{font-size:0.68rem;font-weight:600;color:#6c3fa0;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;background:rgba(108,63,160,0.1);border-radius:2px;border:1px solid rgba(108,63,160,0.2)}
+    .post-title{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:500;color:var(--ink);margin-bottom:0.75rem;letter-spacing:-0.01em;line-height:1.22}
     .post-excerpt{font-size:0.88rem;color:var(--ink2);line-height:1.8;font-weight:300;flex:1}
-    /* Expandable full content */
     .post-full{display:none;font-size:0.88rem;color:var(--ink2);line-height:1.9;font-weight:300;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
     .post-full.open{display:block;animation:fadeUp .35s ease both}
     .post-full p{margin-bottom:0.85rem}
     .post-full p:last-child{margin-bottom:0}
-    .post-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
-    .post-read{font-size:0.76rem;color:var(--ink3);font-weight:400}
-    .post-link{font-size:0.78rem;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border:1.5px solid var(--border);border-radius:3px;transition:all .2s;cursor:pointer;background:none;font-family:'Outfit',sans-serif}
+    .post-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);gap:8px;flex-wrap:wrap}
+    .post-read{font-size:0.76rem;color:var(--ink3)}
+    .post-actions{display:flex;gap:8px;align-items:center}
+    .post-link{font-size:0.75rem;font-weight:600;color:var(--ink);letter-spacing:0.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border:1.5px solid var(--border2);border-radius:3px;transition:all .2s;cursor:pointer;background:none;font-family:'Outfit',sans-serif}
     .post-link:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
     .post-link.expanded{background:var(--surface2);border-color:var(--border)}
+    .btn-delete{font-size:0.72rem;font-weight:500;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase;padding:7px 10px;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;background:none;font-family:'Outfit',sans-serif;transition:all .2s}
+    .btn-delete:hover{color:#c0392b;border-color:#c0392b}
+    .ai-loading{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--ink3);font-style:italic;animation:shimmer 1.2s ease-in-out infinite}
+
+    /* Empty state */
+    .empty-state{text-align:center;padding:4rem 2rem;color:var(--ink3)}
+    .empty-state .big{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink2);margin-bottom:0.5rem;font-weight:500}
+    .empty-state p{font-size:0.92rem;margin-bottom:1.5rem}
+
+    /* ── COMPOSE MODAL ── */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:400;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(4px)}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--surface);border:1px solid var(--border2);border-radius:8px;width:100%;max-width:700px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.2);animation:fadeUp .3s ease both}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.75rem 2rem 1.25rem;border-bottom:1px solid var(--border);flex-shrink:0}
+    .modal-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;color:var(--ink)}
+    .modal-close{background:none;border:none;color:var(--ink3);font-size:1.4rem;cursor:pointer;padding:4px 8px;border-radius:3px;transition:color .2s;line-height:1}
+    .modal-close:hover{color:var(--ink)}
+    .modal-body{padding:1.5rem 2rem;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:1.25rem}
+    .form-group{display:flex;flex-direction:column;gap:7px}
+    .form-label{font-size:0.72rem;font-weight:600;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase}
+    .form-input{width:100%;padding:11px 14px;border:1.5px solid var(--border2);border-radius:3px;font-size:0.93rem;font-family:'Outfit',sans-serif;color:var(--ink);background:var(--surface2);transition:border-color .2s,box-shadow .2s;outline:none;font-weight:300}
+    .form-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.1)}
+    .form-input::placeholder{color:var(--ink3);opacity:0.7}
+    textarea.form-input{min-height:140px;resize:vertical;line-height:1.7}
+    .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a8a9a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+    .ai-hint{font-size:0.78rem;color:var(--ink3);display:flex;align-items:center;gap:6px}
+    .ai-dot{width:6px;height:6px;border-radius:50%;background:#6c3fa0;flex-shrink:0}
+
+    /* AI expand controls */
+    .ai-controls{background:rgba(108,63,160,0.06);border:1px solid rgba(108,63,160,0.18);border-radius:4px;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:8px}
+    .ai-controls-label{font-size:0.7rem;font-weight:600;color:#6c3fa0;letter-spacing:0.1em;text-transform:uppercase}
+    .ai-tone-row{display:flex;gap:6px;flex-wrap:wrap}
+    .tone-btn{font-size:0.72rem;font-weight:500;padding:5px 12px;border-radius:2px;border:1px solid rgba(108,63,160,0.25);background:transparent;color:#6c3fa0;cursor:pointer;transition:all .15s;font-family:'Outfit',sans-serif}
+    .tone-btn:hover,.tone-btn.active{background:#6c3fa0;color:#fff;border-color:#6c3fa0}
+    .btn-ai-expand{display:flex;align-items:center;gap:8px;background:#6c3fa0;color:#fff;padding:10px 20px;border-radius:3px;font-size:0.82rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;border:none;cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif;width:fit-content}
+    .btn-ai-expand:hover{background:#5a3490;transform:translateY(-1px)}
+    .btn-ai-expand:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+    .modal-footer{padding:1.25rem 2rem 1.75rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;flex-wrap:wrap}
+    .btn-publish{background:var(--ink);color:#fff;padding:12px 28px;border-radius:3px;font-size:0.85rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;border:none;cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif}
+    .btn-publish:hover{background:var(--gold);color:var(--ink)}
+    .btn-cancel{background:transparent;color:var(--ink3);padding:11px 20px;border-radius:3px;font-size:0.82rem;font-weight:500;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;letter-spacing:0.04em}
+    .btn-cancel:hover{border-color:var(--ink2);color:var(--ink)}
+
     footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
     footer a{color:var(--ink3);text-decoration:none;transition:color .2s}
     footer a:hover{color:var(--ink)}
-    @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header,.section{padding-left:1.5rem;padding-right:1.5rem}.posts-grid{grid-template-columns:1fr}footer{flex-direction:column;gap:0.5rem}}
 
-    /* ═══════════════════════════════
-       MOBILE NAV — hamburger + drawer
-       ═══════════════════════════════ */
-    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;
-      width:40px;height:40px;background:none;border:none;cursor:pointer;
-      padding:6px;border-radius:3px;flex-shrink:0;margin-left:0.75rem}
-    .hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);
-      transition:transform .3s,opacity .3s,width .3s;transform-origin:center}
-    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-    .hamburger.open span:nth-child(2){opacity:0;width:0}
-    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-
-    .mobile-drawer{display:none;position:fixed;top:64px;left:0;right:0;
-      background:rgba(250,250,248,0.97);backdrop-filter:blur(24px);
-      border-bottom:1px solid var(--border);z-index:190;
-      padding:1.5rem 1.5rem;flex-direction:column;gap:0}
-    [data-theme="dark"] .mobile-drawer{background:rgba(14,14,24,0.97)}
-    .mobile-drawer.open{display:flex}
-    .mobile-drawer a{display:block;font-size:0.9rem;font-weight:500;
-      color:var(--ink3);text-decoration:none;letter-spacing:0.08em;
-      text-transform:uppercase;padding:0.9rem 0;
-      border-bottom:1px solid var(--border);transition:color .2s}
-    .mobile-drawer a:last-child{border-bottom:none}
-    .mobile-drawer a:hover,.mobile-drawer a.active{color:var(--ink)}
-
-    /* ═══════════════════════════════
-       RESPONSIVE — ≤ 640 px
-       ═══════════════════════════════ */
+    @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header,.section{padding-left:1.5rem;padding-right:1.5rem}.posts-grid{grid-template-columns:1fr}footer{flex-direction:column;gap:0.5rem;padding-left:1.5rem;padding-right:1.5rem}}
     @media(max-width:640px){
-      /* Nav */
-      nav{padding:0 1.25rem}
-      .nav-links{display:none}
-      .theme-toggle{margin-left:auto}
-      .hamburger{display:flex}
-
-      /* Common sections / headers */
-      .page-header{padding:3.5rem 1.25rem 2.5rem}
-      .section{padding:3rem 1.25rem}
-      .content{padding:2.5rem 1.25rem;grid-template-columns:1fr;gap:2.5rem}
+      nav{padding:0 1.25rem}.nav-links{display:none}.theme-toggle{margin-left:auto}.hamburger{display:flex}
+      .page-header{padding:3.5rem 1.25rem 2rem}.section{padding:3rem 1.25rem}
+      .posts-grid{grid-template-columns:1fr}.post-card{padding:1.75rem}
       footer{padding:2rem 1.25rem;flex-direction:column;gap:0.4rem;text-align:center}
-      .flash-messages{padding:0 1.25rem}
-
-      /* Hero */
-      .hero{grid-template-columns:1fr;padding:2.5rem 1.25rem 3rem;min-height:auto;gap:0}
-      .hero-right{display:none}
-      .hero-left{padding:3rem 0 0}
-      .hero-left h1{font-size:clamp(2.6rem,9vw,3.5rem)}
-      .cta-row{flex-direction:column}
-      .btn-primary,.btn-ghost{width:100%;justify-content:center}
-
-      /* Stats */
-      .stats-row{grid-template-columns:1fr}
-      .stat{padding:1.75rem}
-
-      /* Skills grid */
-      .skills-grid{grid-template-columns:1fr}
-      .skill-card{padding:1.75rem}
-
-      /* CTA strip */
-      .contact-strip{padding:2.25rem 1.5rem;flex-direction:column;gap:1.5rem}
-      .contact-strip h2{font-size:1.8rem}
-      .btn-gold{width:100%;justify-content:center}
-
-      /* Projects */
-      .project-card{padding:1.75rem;grid-template-columns:1fr}
-      .project-link{justify-self:start;margin-top:0.5rem}
-
-      /* Blog posts */
-      .posts-grid{grid-template-columns:1fr}
-      .post-card{padding:1.75rem}
-
-      /* Contact */
-      .form-card{padding:1.75rem}
-
-      /* Resume */
-      .timeline-item{padding:0 0 2.5rem 1.75rem}
-      .edu-item{padding:1.1rem 1.25rem}
+      .modal{max-height:100vh;border-radius:0}.modal-body{padding:1.25rem 1.5rem}.modal-header{padding:1.25rem 1.5rem 1rem}.modal-footer{padding:1rem 1.5rem 1.25rem}
     }
-
-    /* ═══════════════════════════════
-       RESPONSIVE — 641–960 px (tablet)
-       ═══════════════════════════════ */
-    @media(min-width:641px) and (max-width:960px){
-      nav{padding:0 2rem}
-      .nav-links{gap:1.5rem}
-      .page-header{padding:4.5rem 2rem 3rem}
-      .section{padding:4rem 2rem}
-      .hero{padding:2rem 2rem 3.5rem}
-      .stats-row{grid-template-columns:1fr 1fr}
-      .skills-grid{grid-template-columns:1fr 1fr}
-      .content{padding:3.5rem 2rem;gap:3rem}
-      .contact-strip{padding:3rem 2.5rem}
-      .project-card{padding:2rem;grid-template-columns:1fr}
-      .project-link{justify-self:start;margin-top:0.5rem}
-      .posts-grid{grid-template-columns:1fr}
-      footer{padding:2rem 2rem}
-      .flash-messages{padding:0 2rem}
-    }
-
   </style>
 </head>
 <body>
-  <nav>
-    <a href="{{ url_for('home') }}" class="nav-logo">NK<span class="nav-logo-dot"></span></a>
+  <nav id="navbar">
+    <a href="/" class="nav-logo">NK<span class="nav-logo-dot"></span></a>
     <ul class="nav-links">
-      <li><a href="{{ url_for('home') }}">Home</a></li>
-      <li><a href="{{ url_for('projects') }}">Projects</a></li>
-      <li><a href="{{ url_for('resume') }}">Resume</a></li>
-      <li><a href="{{ url_for('blog') }}" class="active">Blog</a></li>
-      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/resume">Resume</a></li>
+      <li><a href="/blog" class="active">Blog</a></li>
+      <li><a href="/contact">Contact</a></li>
     </ul>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileDrawer"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
-  <div class="mobile-drawer" id="mobileDrawer" role="navigation" aria-label="Mobile navigation">
-      <a href="{{ url_for('home') }}">Home</a>
-      <a href="{{ url_for('projects') }}">Projects</a>
-      <a href="{{ url_for('resume') }}">Resume</a>
-      <a href="{{ url_for('blog') }}" class="active">Blog</a>
-      <a href="{{ url_for('contact') }}">Contact</a>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <a href="/">Home</a>
+    <a href="/projects">Projects</a>
+    <a href="/resume">Resume</a>
+    <a href="/blog" class="active">Blog</a>
+    <a href="/contact">Contact</a>
+  </div>
+
+  <main>
+    <div class="page-header">
+      <div class="page-eyebrow">Writing</div>
+      <h1>Field notes &amp;<br>technical thinking</h1>
+      <p class="lead">Practical writing on cybersecurity, DevOps, and enterprise IT — from someone who's done the job, not just studied it.</p>
+      <div class="header-actions">
+        <button class="btn-write" onclick="openCompose()">✦ Write a post</button>
+        <button class="btn-ghost-sm" id="clearAllBtn" onclick="confirmClearAll()" style="display:none">Clear all posts</button>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <!-- Topics filter -->
+    <div class="section reveal" style="padding-bottom:0">
+      <div class="section-label">Topics</div>
+      <div class="topics-row" id="topicsRow">
+        <span class="topic-tag active" data-topic="all">All posts</span>
+        <span class="topic-tag" data-topic="Blue Team">Blue Team</span>
+        <span class="topic-tag" data-topic="Linux">Linux</span>
+        <span class="topic-tag" data-topic="DevOps">DevOps</span>
+        <span class="topic-tag" data-topic="Flask & Python">Flask &amp; Python</span>
+        <span class="topic-tag" data-topic="Governance">Governance</span>
+        <span class="topic-tag" data-topic="Career">Career</span>
+        <span class="topic-tag" data-topic="Tools & Workflow">Tools &amp; Workflow</span>
+      </div>
+    </div>
+
+    <!-- Posts -->
+    <div class="section reveal" style="padding-top:2.5rem">
+      <div class="section-label" id="postsLabel">Latest posts</div>
+      <div class="posts-grid" id="postsGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="big">No posts yet</div>
+        <p>Write your first post — or switch the topic filter.</p>
+        <button class="btn-write" onclick="openCompose()">✦ Write something</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Nahum Karisa — Portfolio</span>
+    <span><a href="/contact">Get in touch</a> · © 2026</span>
+  </footer>
+
+  <!-- ── COMPOSE MODAL ── -->
+  <div class="modal-overlay" id="composeModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Write a post</div>
+        <button class="modal-close" onclick="closeCompose()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="postTitle" placeholder="What's the post about?">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input form-select" id="postCategory">
+            <option value="Blue Team">Blue Team</option>
+            <option value="Linux">Linux</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Flask & Python">Flask &amp; Python</option>
+            <option value="Governance">Governance</option>
+            <option value="Career">Career</option>
+            <option value="Tools & Workflow">Tools &amp; Workflow</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your notes / key points</label>
+          <textarea class="form-input" id="postNotes" placeholder="Jot down your main ideas, bullet points, or a rough draft. AI can expand this into a full post for you."></textarea>
+          <div class="ai-hint"><div class="ai-dot"></div>AI can expand your notes into a full post</div>
+        </div>
+
+        <!-- AI controls -->
+        <div class="ai-controls">
+          <div class="ai-controls-label">✦ AI Expand</div>
+          <div class="ai-tone-row" id="toneRow">
+            <button class="tone-btn active" data-tone="technical">Technical</button>
+            <button class="tone-btn" data-tone="conversational">Conversational</button>
+            <button class="tone-btn" data-tone="tutorial">Tutorial</button>
+            <button class="tone-btn" data-tone="opinionated">Opinionated</button>
+          </div>
+          <button class="btn-ai-expand" id="aiExpandBtn" onclick="aiExpand()">✦ Expand with AI</button>
+          <div class="ai-loading" id="aiLoading" style="display:none">✦ Writing your post…</div>
+        </div>
+
+        <div class="form-group" id="bodyGroup" style="display:none">
+          <label class="form-label">Full post <span style="font-size:0.68rem;color:var(--gold);font-weight:500;letter-spacing:0.06em">AI-generated — edit freely</span></label>
+          <textarea class="form-input" id="postBody" style="min-height:220px"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeCompose()">Cancel</button>
+        <button class="btn-publish" onclick="publishPost()">Publish post →</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Hamburger menu
+    // ── Theme ──
+    (function(){
+      var saved = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+    var toggle = document.getElementById('themeToggle');
+    var root = document.documentElement;
+    toggle.textContent = root.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+    toggle.addEventListener('click', function(){
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    // ── Nav ──
+    var nav = document.getElementById('navbar');
+    window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 20); });
     (function(){
       var btn = document.getElementById('hamburgerBtn');
       var drawer = document.getElementById('mobileDrawer');
-      if(!btn || !drawer) return;
       btn.addEventListener('click', function(){
         var open = drawer.classList.toggle('open');
         btn.classList.toggle('open', open);
         btn.setAttribute('aria-expanded', open);
       });
-      // Close on link click
       drawer.querySelectorAll('a').forEach(function(a){
         a.addEventListener('click', function(){
           drawer.classList.remove('open');
@@ -214,164 +322,242 @@
         });
       });
     })();
-  </script>
-  <script>
-    // Wire up theme toggle now that DOM exists
-    (function(){
-      var root = document.documentElement;
-      var toggle = document.getElementById('themeToggle');
-      var current = root.getAttribute('data-theme') || 'light';
-      if(toggle) toggle.textContent = current === 'dark' ? '☀️' : '🌙';
-      if(toggle) toggle.addEventListener('click', function(){
-        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+
+    // ── Reveal ──
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+
+    // ── Seed posts ──
+    var SEED_POSTS = [
+      {
+        id:'seed-1', title:'Setting up a home SIEM on a $0 budget',
+        category:'Blue Team', date:'Apr 2026', aiGenerated:false,
+        excerpt:"You don't need a SOC licence to start practising threat detection. I walk through spinning up Wazuh on a spare Linux box, ingesting logs from three endpoints, and writing your first detection rule — start to finish in an afternoon.",
+        body:"The first thing most people get wrong is overcomplicating the architecture. You don't need a dedicated server farm — a $35 Raspberry Pi or an old laptop running Ubuntu will handle Wazuh's manager node for a home lab just fine.\n\nStart by installing Wazuh Manager via the official script, then point your endpoints (Windows, Linux, or macOS) at it using the lightweight agent. Within minutes you'll have system logs, authentication events, and file integrity monitoring flowing in.\n\nThe real value comes from writing custom rules. Wazuh's XML-based rule engine lets you define alerts like \"three failed SSH logins within 60 seconds from the same IP\" — classic brute-force detection, built in under an hour. From there, wire up a free Elastic stack for dashboards and you have a genuinely useful home SOC.",
+        readTime:'8 min read', seeded:true
+      },
+      {
+        id:'seed-2', title:'CI/CD for solo developers: stop deploying by hand',
+        category:'DevOps', date:'Mar 2026', aiGenerated:false,
+        excerpt:"A GitHub Actions workflow that tests your Flask app, builds a Docker image, and pushes to Render on every merge to main. The whole thing fits in 40 lines of YAML and takes about an hour to wire up.",
+        body:"Manual deployments are a tax you pay every single time you ship. Even if it takes only five minutes, those five minutes are high-anxiety, easy-to-mess-up, and completely unnecessary once you automate them.\n\nThe workflow I use has three jobs: test (run pytest), build (docker buildx), and deploy (call Render's deploy hook via curl). Each job only runs if the previous one passes, so a failing test literally cannot reach production. The whole file is under 45 lines of YAML.\n\nThe key insight: store your Render deploy hook URL as a GitHub Actions secret, and your entire CD pipeline costs you $0. Combined with Render's free tier for side projects, you have proper CI/CD for a solo hobby app at no cost whatsoever.",
+        readTime:'6 min read', seeded:true
+      },
+      {
+        id:'seed-3', title:'What UN IT taught me about documentation',
+        category:'Governance', date:'Feb 2026', aiGenerated:false,
+        excerpt:"The United Nations runs on tickets, change requests, and audit trails. After supporting executive-level users for years under those constraints, I came away with habits that make every IT role easier.",
+        body:"When your users include senior diplomats and department heads, ambiguity is not an option. Every change I made required a change request with a rollback plan. Every incident required a root-cause writeup.\n\nThe habit that stuck most: write your ticket as if you'll be explaining the situation to yourself in six months. \"User can't log in\" is useless. \"User jsmith reports intermittent Outlook authentication failure since 14 Feb; reproduced on primary workstation, not on web client; AD account unlocked at 09:42 UTC\" is actionable.\n\nGood documentation also builds trust. When an executive escalates an issue, being able to pull up a timestamped, complete record of every action taken is the difference between a 10-minute resolution and a two-hour war room.",
+        readTime:'5 min read', seeded:true
+      },
+      {
+        id:'seed-4', title:'10 cron jobs every sysadmin should be running',
+        category:'Linux', date:'Jan 2026', aiGenerated:false,
+        excerpt:"Disk-space alerts, log rotation, automated backups, and certificate expiry checks — the small scheduled tasks that stop midnight calls. Copy-paste ready, with notes on what each one actually does.",
+        body:"The best cron jobs are invisible — they silently prevent disasters you never know about.\n\nDisk space alert: runs hourly, emails you if any filesystem hits 85%.\n\nSSL cert expiry check: runs weekly via openssl, flags certs expiring in under 30 days — expired certs cause user-facing outages that are completely avoidable.\n\nDatabase backup: nightly pg_dump piped to gzip with a 30-day retention cleanup job alongside it. Combine with rclone to push to cloud storage for off-site redundancy.\n\nThe remaining seven cover log rotation hygiene, temp-file cleanup, uptime reporting, and a weekly reboot window for patch application. Each one has prevented at least one incident in my career.",
+        readTime:'7 min read', seeded:true
+      }
+    ];
+
+    // ── State ──
+    var activeTopic = 'all';
+    var selectedTone = 'technical';
+
+    function getStoredPosts(){
+      try {
+        var raw = localStorage.getItem('nk_blog_posts');
+        return raw ? JSON.parse(raw) : null;
+      } catch(e){ return null; }
+    }
+
+    function saveToStorage(posts){
+      try { localStorage.setItem('nk_blog_posts', JSON.stringify(posts)); } catch(e){}
+    }
+
+    function loadPosts(){
+      var stored = getStoredPosts();
+      if(!stored){
+        saveToStorage(SEED_POSTS);
+        return SEED_POSTS.slice();
+      }
+      return stored;
+    }
+
+    function readTime(text){
+      var words = text.trim().split(/\s+/).length;
+      var mins = Math.max(1, Math.round(words / 200));
+      return mins + ' min read';
+    }
+
+    function formatDate(d){
+      return new Date(d).toLocaleDateString('en-GB', {month:'short', year:'numeric'});
+    }
+
+    // ── Render ──
+    function renderPosts(){
+      var posts = loadPosts();
+      var grid = document.getElementById('postsGrid');
+      var empty = document.getElementById('emptyState');
+      var clearBtn = document.getElementById('clearAllBtn');
+      var userPosts = posts.filter(function(p){ return !p.seeded; });
+      clearBtn.style.display = userPosts.length > 0 ? '' : 'none';
+      var filtered = activeTopic === 'all' ? posts : posts.filter(function(p){ return p.category === activeTopic; });
+      grid.innerHTML = '';
+      if(!filtered.length){
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+      filtered.slice().reverse().forEach(function(post){
+        var card = buildCard(post);
+        grid.appendChild(card);
       });
-    })();
-  </script>
+    }
 
-  <main>
-    <div class="page-header">
-      <div class="page-eyebrow">Writing</div>
-      <h1>Field notes &amp;<br>technical thinking</h1>
-      <p class="lead">Practical writing on cybersecurity, DevOps, and working in enterprise IT — from someone who's done the job, not just studied it.</p>
-    </div>
-    <hr class="divider">
+    function buildCard(post){
+      var card = document.createElement('div');
+      card.className = 'post-card';
+      card.dataset.postId = post.id;
+      card.dataset.category = post.category;
+      var bodyParas = post.body.split('\n\n').map(function(p){ return '<p>'+escHtml(p)+'</p>'; }).join('');
+      var fullId = 'pf-'+post.id;
+      var aiB = post.aiGenerated ? '<span class="ai-badge">AI Expanded</span>' : '';
+      var deleteBtn = post.seeded ? '' : '<button class="btn-delete" onclick="deletePost(\''+post.id+'\')">Delete</button>';
+      card.innerHTML = '<div class="post-meta"><span class="post-date">'+escHtml(post.date)+'</span><div class="post-dot"></div><span class="post-category">'+escHtml(post.category)+'</span>'+aiB+'</div><div class="post-title">'+escHtml(post.title)+'</div><div class="post-excerpt">'+escHtml(post.excerpt)+'</div><div class="post-full" id="'+fullId+'">'+bodyParas+'</div><div class="post-footer"><span class="post-read">'+escHtml(post.readTime||'')+'</span><div class="post-actions">'+deleteBtn+'<button class="post-link" onclick="togglePost(\''+fullId+'\', this)">Read more ↓</button></div></div>';
+      return card;
+    }
 
-    <div class="section reveal">
-      <div class="section-label">Topics I write about</div>
-      <div class="topics-row">
-        <span class="topic-tag">Blue Team</span>
-        <span class="topic-tag">Linux Administration</span>
-        <span class="topic-tag">DevOps</span>
-        <span class="topic-tag">Flask &amp; Python</span>
-        <span class="topic-tag">SIEM &amp; Monitoring</span>
-        <span class="topic-tag">Governance &amp; Compliance</span>
-        <span class="topic-tag">Career</span>
-        <span class="topic-tag">Tools &amp; Workflow</span>
-      </div>
-    </div>
+    function escHtml(s){
+      if(!s) return '';
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
 
-    <div class="section reveal" style="padding-top:0">
-      <div class="section-label">Latest posts</div>
-      <div class="posts-grid">
-
-        <div class="post-card">
-          <div class="post-meta">
-            <span class="post-date">Apr 2026</span>
-            <div class="post-dot"></div>
-            <span class="post-category">Blue Team</span>
-          </div>
-          <div class="post-title">Setting up a home SIEM on a $0 budget</div>
-          <div class="post-excerpt">You don't need a SOC licence to start practising threat detection. I walk through spinning up Wazuh on a spare Linux box, ingesting logs from three endpoints, and writing your first detection rule — start to finish in an afternoon.</div>
-          <div class="post-full" id="post-full-1">
-            <p>The first thing most people get wrong is overcomplicating the architecture. You don't need a dedicated server farm — a $35 Raspberry Pi or an old laptop running Ubuntu will handle Wazuh's manager node for a home lab just fine.</p>
-            <p>Start by installing Wazuh Manager via the official script, then point your endpoints (Windows, Linux, or macOS) at it using the lightweight agent. Within minutes you'll have system logs, authentication events, and file integrity monitoring flowing in.</p>
-            <p>The real value comes from writing custom rules. Wazuh's XML-based rule engine lets you define alerts like "three failed SSH logins within 60 seconds from the same IP" — classic brute-force detection, built in under an hour. From there, wire up a free Elastic stack for dashboards and you have a genuinely useful home SOC.</p>
-          </div>
-          <div class="post-footer">
-            <span class="post-read">8 min read</span>
-            <button class="post-link" onclick="togglePost('post-full-1', this)">Read more ↓</button>
-          </div>
-        </div>
-
-        <div class="post-card">
-          <div class="post-meta">
-            <span class="post-date">Mar 2026</span>
-            <div class="post-dot"></div>
-            <span class="post-category">DevOps</span>
-          </div>
-          <div class="post-title">CI/CD for solo developers: stop deploying by hand</div>
-          <div class="post-excerpt">A GitHub Actions workflow that tests your Flask app, builds a Docker image, and pushes to Render on every merge to main. The whole thing fits in 40 lines of YAML and takes about an hour to wire up.</div>
-          <div class="post-full" id="post-full-2">
-            <p>Manual deployments are a tax you pay every single time you ship. Even if it takes only five minutes, those five minutes are high-anxiety, easy-to-mess-up, and completely unnecessary once you automate them.</p>
-            <p>The workflow I use has three jobs: test (run pytest), build (docker buildx), and deploy (call Render's deploy hook via curl). Each job only runs if the previous one passes, so a failing test literally cannot reach production. The whole file is under 45 lines of YAML.</p>
-            <p>The key insight: store your Render deploy hook URL as a GitHub Actions secret, and your entire CD pipeline costs you $0. Combined with Render's free tier for side projects, you have proper CI/CD for a solo hobby app at no cost whatsoever.</p>
-          </div>
-          <div class="post-footer">
-            <span class="post-read">6 min read</span>
-            <button class="post-link" onclick="togglePost('post-full-2', this)">Read more ↓</button>
-          </div>
-        </div>
-
-        <div class="post-card">
-          <div class="post-meta">
-            <span class="post-date">Feb 2026</span>
-            <div class="post-dot"></div>
-            <span class="post-category">Governance</span>
-          </div>
-          <div class="post-title">What UN IT taught me about documentation</div>
-          <div class="post-excerpt">The United Nations runs on tickets, change requests, and audit trails. After supporting executive-level users for years under those constraints, I came away with habits that make every IT role easier.</div>
-          <div class="post-full" id="post-full-3">
-            <p>When your users include senior diplomats and department heads, ambiguity is not an option. Every change I made required a change request with a rollback plan. Every incident required a root-cause writeup. At first this felt bureaucratic. Eventually it felt like professional hygiene.</p>
-            <p>The habit that stuck most: write your ticket as if you'll be explaining the situation to yourself in six months. Because you will be. "User can't log in" is useless. "User jsmith reports intermittent Outlook authentication failure since 14 Feb; reproduced on primary workstation, not on web client; AD account unlocked at 09:42 UTC" is actionable.</p>
-            <p>Good documentation also builds trust. When an executive escalates an issue, being able to pull up a timestamped, complete record of every action taken is the difference between a 10-minute resolution and a two-hour war room. Document as you go — not after.</p>
-          </div>
-          <div class="post-footer">
-            <span class="post-read">5 min read</span>
-            <button class="post-link" onclick="togglePost('post-full-3', this)">Read more ↓</button>
-          </div>
-        </div>
-
-        <div class="post-card">
-          <div class="post-meta">
-            <span class="post-date">Jan 2026</span>
-            <div class="post-dot"></div>
-            <span class="post-category">Linux</span>
-          </div>
-          <div class="post-title">10 cron jobs every sysadmin should be running</div>
-          <div class="post-excerpt">Disk-space alerts, log rotation, automated backups, and certificate expiry checks — the small scheduled tasks that stop midnight calls. Copy-paste ready, with notes on what each one actually does.</div>
-          <div class="post-full" id="post-full-4">
-            <p>The best cron jobs are invisible — they silently prevent disasters you never know about. Here are the ones I install on every server I manage from day one.</p>
-            <p><strong>Disk space alert:</strong> <code>df -h | awk '$5+0>85{print}' | mail -s "Disk warning" admin@example.com</code> — runs hourly. If any filesystem hits 85% you hear about it before users do.</p>
-            <p><strong>SSL cert expiry check:</strong> <code>echo | openssl s_client -connect yourdomain.com:443 2>/dev/null | openssl x509 -noout -dates</code> piped through a date-comparison script — runs weekly. Expired certs cause user-facing outages that are completely avoidable.</p>
-            <p><strong>Database backup:</strong> <code>pg_dump mydb | gzip > /backups/mydb-$(date +%F).sql.gz</code> — nightly, with a 30-day retention cleanup job alongside it. Combine with rclone to push to cloud storage for off-site redundancy.</p>
-            <p>The remaining seven cover log rotation hygiene, temp-file cleanup, uptime reporting, and a weekly reboot window for patch application. Each one has prevented at least one incident in my career.</p>
-          </div>
-          <div class="post-footer">
-            <span class="post-read">7 min read</span>
-            <button class="post-link" onclick="togglePost('post-full-4', this)">Read more ↓</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <span>Nahum Karisa — Portfolio</span>
-    <span><a href="{{ url_for('contact') }}">Get in touch</a> · © 2026</span>
-  </footer>
-
-  <script>
-    // ── Dark mode ──
-    const toggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    const saved = localStorage.getItem('theme') || 'light';
-    root.setAttribute('data-theme', saved);
-    toggle.textContent = saved === 'dark' ? '☀️' : '🌙';
-
-    toggle.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      toggle.textContent = next === 'dark' ? '☀️' : '🌙';
-    });
-
-    // ── Expand/collapse posts ──
-    function togglePost(id, btn) {
-      const el = document.getElementById(id);
-      const isOpen = el.classList.toggle('open');
+    function togglePost(id, btn){
+      var el = document.getElementById(id);
+      var isOpen = el.classList.toggle('open');
       btn.textContent = isOpen ? 'Show less ↑' : 'Read more ↓';
       btn.classList.toggle('expanded', isOpen);
     }
 
-    // ── Reveal on scroll ──
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-    }, {threshold: 0.1});
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    function deletePost(id){
+      var posts = loadPosts().filter(function(p){ return p.id !== id; });
+      saveToStorage(posts);
+      renderPosts();
+    }
+
+    function confirmClearAll(){
+      if(!confirm('Remove all your custom posts? Seeded posts stay.')) return;
+      var posts = loadPosts().filter(function(p){ return p.seeded; });
+      saveToStorage(posts);
+      renderPosts();
+    }
+
+    // ── Topic filter ──
+    document.getElementById('topicsRow').addEventListener('click', function(e){
+      var tag = e.target.closest('.topic-tag');
+      if(!tag) return;
+      document.querySelectorAll('.topic-tag').forEach(function(t){ t.classList.remove('active'); });
+      tag.classList.add('active');
+      activeTopic = tag.dataset.topic;
+      renderPosts();
+    });
+
+    // ── Compose modal ──
+    function openCompose(){
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postNotes').value = '';
+      document.getElementById('postBody').value = '';
+      document.getElementById('bodyGroup').style.display = 'none';
+      document.getElementById('aiLoading').style.display = 'none';
+      document.getElementById('aiExpandBtn').disabled = false;
+      document.getElementById('composeModal').classList.add('open');
+    }
+
+    function closeCompose(){
+      document.getElementById('composeModal').classList.remove('open');
+    }
+
+    document.getElementById('composeModal').addEventListener('click', function(e){
+      if(e.target === this) closeCompose();
+    });
+
+    // ── Tone select ──
+    document.getElementById('toneRow').addEventListener('click', function(e){
+      var btn = e.target.closest('.tone-btn');
+      if(!btn) return;
+      document.querySelectorAll('.tone-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      selectedTone = btn.dataset.tone;
+    });
+
+    // ── AI Expand ──
+    async function aiExpand(){
+      var title = document.getElementById('postTitle').value.trim();
+      var notes = document.getElementById('postNotes').value.trim();
+      var category = document.getElementById('postCategory').value;
+      if(!title && !notes){ alert('Add a title or some notes first.'); return; }
+      document.getElementById('aiExpandBtn').disabled = true;
+      document.getElementById('aiLoading').style.display = 'flex';
+      document.getElementById('bodyGroup').style.display = 'none';
+      var prompt = 'You are Nahum Karisa, a DevOps and Cybersecurity professional based in Nairobi with 8+ years in enterprise IT including 6 years at the UN. Write a blog post in a ' + selectedTone + ' tone for a technical audience.\n\nPost title: ' + (title || 'Untitled') + '\nCategory: ' + category + '\nNotes / key points:\n' + (notes || '(no notes — improvise based on the title and your expertise)') + '\n\nWrite 3-4 paragraphs of real, practical, opinionated content. Do NOT use bullet points or headers. Write in first person. Sound like someone who has actually done this work. No filler, no generic advice. Start directly with the content — no preamble.';
+      try {
+        var res = await fetch('https://api.anthropic.com/v1/messages', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            model:'claude-sonnet-4-20250514',
+            max_tokens:1000,
+            messages:[{role:'user', content: prompt}]
+          })
+        });
+        var data = await res.json();
+        var text = (data.content||[]).filter(function(b){ return b.type==='text'; }).map(function(b){ return b.text; }).join('');
+        document.getElementById('postBody').value = text;
+        document.getElementById('bodyGroup').style.display = 'flex';
+      } catch(err){
+        alert('AI expand failed. You can still write the body manually below.');
+        document.getElementById('bodyGroup').style.display = 'flex';
+      }
+      document.getElementById('aiLoading').style.display = 'none';
+      document.getElementById('aiExpandBtn').disabled = false;
+    }
+
+    // ── Publish ──
+    function publishPost(){
+      var title = document.getElementById('postTitle').value.trim();
+      var category = document.getElementById('postCategory').value;
+      var notes = document.getElementById('postNotes').value.trim();
+      var body = document.getElementById('postBody').value.trim();
+      var aiGenerated = document.getElementById('bodyGroup').style.display !== 'none' && body.length > 0;
+      if(!title){ alert('Please add a title.'); return; }
+      var finalBody = body || notes;
+      if(!finalBody){ alert('Please add some content or notes.'); return; }
+      var now = new Date();
+      var post = {
+        id: 'post-' + Date.now(),
+        title: title,
+        category: category,
+        date: now.toLocaleDateString('en-GB', {month:'short', year:'numeric'}),
+        aiGenerated: aiGenerated,
+        excerpt: finalBody.substring(0, 200) + (finalBody.length > 200 ? '…' : ''),
+        body: finalBody,
+        readTime: readTime(finalBody),
+        seeded: false
+      };
+      var posts = loadPosts();
+      posts.push(post);
+      saveToStorage(posts);
+      closeCompose();
+      activeTopic = 'all';
+      document.querySelectorAll('.topic-tag').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelector('.topic-tag[data-topic="all"]').classList.add('active');
+      renderPosts();
+    }
+
+    // ── Init ──
+    renderPosts();
   </script>
 </body>
 </html>
