@@ -8,11 +8,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;--surface:#fafaf8;--surface2:#f2f1ed;--gold:#c9a84c;--gold2:#e8c97a;--border:rgba(0,0,0,0.08)}
+    :root{
+      --ink:#0c0c14;--ink2:#3c3c50;--ink3:#8a8a9a;
+      --surface:#fafaf8;--surface2:#f2f1ed;
+      --gold:#c9a84c;--gold2:#e8c97a;
+      --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+    }
     html{scroll-behavior:smooth}
-    body{font-family:'Outfit',sans-serif;background:#fafaf8;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");opacity:0.35}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+    body{
+      font-family:'Outfit',sans-serif;background:#fafaf8;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 100%, rgba(201,168,76,0.04) 0%, transparent 60%);
+      background-attachment:fixed;color:var(--ink);min-height:100vh;line-height:1.65;overflow-x:hidden;
+      transition:background .3s,color .3s;
+    }
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+      opacity:0.35}
+
+    /* Nav */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:64px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+    nav.scrolled{box-shadow:0 4px 32px rgba(0,0,0,0.05)}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--ink);text-decoration:none;display:flex;align-items:flex-start;gap:1px}
     .nav-logo-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:4px;flex-shrink:0}
     .nav-links{display:flex;gap:2.5rem;list-style:none}
@@ -20,182 +37,653 @@
     .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
     .nav-links a:hover,.nav-links a.active{color:var(--ink)}
     .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+
+    .theme-toggle{background:none;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;padding:7px 10px;display:flex;align-items:center;color:var(--ink3);font-size:1rem;transition:all .2s;flex-shrink:0;margin-left:1.5rem}
+    .theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
+
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:6px;border-radius:3px;flex-shrink:0;margin-left:0.75rem}
+    .hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);transition:transform .3s,opacity .3s,width .3s;transform-origin:center}
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0;width:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mobile-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(250,250,248,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);z-index:190;padding:1.5rem;flex-direction:column;gap:0}
+    .mobile-drawer.open{display:flex}
+    .mobile-drawer a{display:block;font-size:0.9rem;font-weight:500;color:var(--ink3);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 0;border-bottom:1px solid var(--border);transition:color .2s}
+    .mobile-drawer a:last-child{border-bottom:none}
+    .mobile-drawer a:hover,.mobile-drawer a.active{color:var(--ink)}
+
     @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
     .reveal.visible{opacity:1;transform:translateY(0)}
+
     main{padding-top:64px;position:relative;z-index:1}
-    .page-header{max-width:1280px;margin:0 auto;padding:6rem 3.5rem 4rem;animation:fadeUp .9s .1s both}
+
+    /* Page header */
+    .page-header{max-width:1280px;margin:0 auto;padding:6rem 3.5rem 3rem;animation:fadeUp .9s .1s both}
     .page-eyebrow{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;color:var(--gold);text-transform:uppercase;margin-bottom:1.1rem;display:flex;align-items:center;gap:12px}
     .page-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
     .page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,5rem);letter-spacing:-0.025em;line-height:1.03;margin-bottom:1.25rem;font-weight:500}
     .page-header .lead{font-size:1.05rem;color:var(--ink2);max-width:56ch;line-height:1.85;font-weight:300}
     .divider{border:none;border-top:1px solid var(--border);max-width:1280px;margin:0 auto}
-    .section{max-width:1280px;margin:0 auto;padding:5rem 3.5rem}
-    .section-label{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
+
+    /* Filter tabs */
+    .filters{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem 0;display:flex;gap:8px;flex-wrap:wrap}
+    .filter-btn{font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:8px 18px;border-radius:3px;border:1.5px solid var(--border);background:transparent;color:var(--ink3);cursor:pointer;transition:all .2s}
+    .filter-btn:hover{border-color:var(--ink2);color:var(--ink)}
+    .filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+    /* Section */
+    .section{max-width:1280px;margin:0 auto;padding:3.5rem 3.5rem 5rem}
+    .section-label{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:10px}
     .section-label::before{content:'';width:20px;height:1px;background:var(--gold)}
 
-    /* Project grid */
-    .project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
-    .project-card{background:var(--surface2);padding:2.75rem;transition:background .15s;display:flex;flex-direction:column;gap:1.5rem;justify-content:space-between}
-    .project-card:hover{background:var(--surface)}
-    .project-card.upcoming{background:transparent}
-    .project-card.upcoming:hover{background:rgba(255,255,255,0.6)}
-    .proj-left{}
-    .proj-kicker{font-size:0.7rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.5rem}
-    .project-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--ink);margin-bottom:0.9rem;letter-spacing:-0.01em}
-    .project-title a{color:inherit;text-decoration:none;transition:color .2s}
-    .project-title a:hover{color:var(--gold)}
-    .project-desc{list-style:none;display:flex;flex-direction:column;gap:0.45rem}
-    .project-desc li{font-size:0.9rem;color:var(--ink2);padding-left:1.3rem;position:relative;font-weight:300;line-height:1.65}
-    .project-desc li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:0.7rem;top:0.18em}
-    .project-link{display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;padding:9px 20px;border:1.5px solid var(--border);border-radius:3px;transition:all .2s;letter-spacing:0.06em;text-transform:uppercase;align-self:flex-start}
-    .project-link:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-    .project-link.muted{color:var(--ink3);cursor:default}
-    .project-link.muted:hover{background:transparent;color:var(--ink3);border-color:var(--border)}
+    /* ── Project grid ── */
+    .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+
+    /* ── Project card ── */
+    .project-card{
+      background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+      overflow:hidden;display:flex;flex-direction:column;
+      transition:transform .25s,box-shadow .25s,border-color .25s;
+      position:relative;
+    }
+    .project-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.09);border-color:var(--border2)}
+    .project-card.upcoming{opacity:0.72}
+    .project-card.hidden{display:none}
+
+    /* Thumbnail area */
+    .proj-thumb{
+      width:100%;aspect-ratio:16/9;overflow:hidden;
+      background:var(--surface2);position:relative;flex-shrink:0;
+    }
+    .proj-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+    .project-card:hover .proj-thumb img{transform:scale(1.04)}
+
+    /* Fallback illustration when no screenshot */
+    .proj-thumb-fallback{
+      width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+    .proj-thumb-fallback svg{width:100%;height:100%;position:absolute;inset:0}
+
+    /* Status badge on thumb */
+    .proj-badge{
+      position:absolute;top:12px;right:12px;z-index:2;
+      font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+      padding:4px 10px;border-radius:2px;
+    }
+    .badge-live{background:rgba(10,143,94,0.9);color:#fff}
+    .badge-progress{background:rgba(201,168,76,0.9);color:#2a1e00}
+    .badge-soon{background:rgba(60,60,80,0.72);color:#fff}
+    .badge-running{background:rgba(10,90,143,0.9);color:#fff}
+
+    /* Card body */
+    .proj-body{padding:1.75rem;display:flex;flex-direction:column;gap:1rem;flex:1}
+    .proj-kicker{font-size:0.68rem;font-weight:600;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase}
+    .proj-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:var(--ink);letter-spacing:-0.01em;line-height:1.2}
+    .proj-title a{color:inherit;text-decoration:none;transition:color .2s}
+    .proj-title a:hover{color:var(--gold)}
+    .proj-desc{font-size:0.88rem;color:var(--ink2);line-height:1.75;font-weight:300;flex:1}
+
+    /* Tags row */
+    .proj-tags{display:flex;flex-wrap:wrap;gap:6px}
+    .proj-tag{font-size:0.68rem;font-weight:500;padding:3px 9px;border-radius:2px;background:var(--surface);color:var(--ink3);letter-spacing:0.05em;text-transform:uppercase;border:1px solid var(--border)}
+
+    /* Card footer */
+    .proj-footer{padding:0 1.75rem 1.75rem;display:flex;align-items:center;gap:10px}
+    .proj-link{
+      display:inline-flex;align-items:center;gap:5px;
+      font-size:0.75rem;font-weight:600;color:var(--ink);text-decoration:none;
+      padding:8px 16px;border:1.5px solid var(--border2);border-radius:3px;
+      transition:all .2s;letter-spacing:0.06em;text-transform:uppercase;
+    }
+    .proj-link:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .proj-link.muted{color:var(--ink3);cursor:default;border-color:var(--border)}
+    .proj-link.muted:hover{background:transparent;color:var(--ink3);border-color:var(--border)}
+
+    /* Upcoming divider */
+    .upcoming-header{max-width:1280px;margin:0 auto;padding:0 3.5rem;display:flex;align-items:center;gap:1.5rem}
+    .upcoming-header::after{content:'';flex:1;height:1px;background:var(--border)}
 
     footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
-    @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header,.section{padding-left:1.5rem;padding-right:1.5rem}.project-grid{grid-template-columns:1fr}footer{flex-direction:column;gap:0.5rem}}
-  
-    [data-theme="dark"]{--ink:#e8e8f0;--ink2:#b8b8cc;--ink3:#7a7a90;--surface:#0e0e18;--surface2:#181824;--border:rgba(255,255,255,0.08);--gold:#d4a84c;--gold2:#e8c97a}
-    [data-theme="dark"] body{background:#0e0e18 !important;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.08) 0%, transparent 60%) !important}
-    [data-theme="dark"] nav{background:rgba(14,14,24,0.92) !important}
-    [data-theme="dark"] .post-card,[data-theme="dark"] .skill-card,[data-theme="dark"] .stat,[data-theme="dark"] .card{background:#181824 !important}
-    body{transition:background .3s,color .3s}
-    .theme-toggle{background:none;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;padding:7px 10px;display:flex;align-items:center;color:var(--ink3);font-size:1rem;transition:all .2s;flex-shrink:0;margin-left:1.5rem}
-    .theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
 
-    /* ═══════════════════════════════
-       MOBILE NAV — hamburger + drawer
-       ═══════════════════════════════ */
-    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;
-      width:40px;height:40px;background:none;border:none;cursor:pointer;
-      padding:6px;border-radius:3px;flex-shrink:0;margin-left:0.75rem}
-    .hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);
-      transition:transform .3s,opacity .3s,width .3s;transform-origin:center}
-    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-    .hamburger.open span:nth-child(2){opacity:0;width:0}
-    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-
-    .mobile-drawer{display:none;position:fixed;top:64px;left:0;right:0;
-      background:rgba(250,250,248,0.97);backdrop-filter:blur(24px);
-      border-bottom:1px solid var(--border);z-index:190;
-      padding:1.5rem 1.5rem;flex-direction:column;gap:0}
+    /* Dark mode */
+    [data-theme="dark"]{--ink:#e8e8f0;--ink2:#b8b8cc;--ink3:#7a7a90;--surface:#0e0e18;--surface2:#181824;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);--gold:#d4a84c;--gold2:#e8c97a}
+    [data-theme="dark"] body{background:#0e0e18!important;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.08) 0%, transparent 60%)!important}
+    [data-theme="dark"] nav{background:rgba(14,14,24,0.92)!important}
     [data-theme="dark"] .mobile-drawer{background:rgba(14,14,24,0.97)}
-    .mobile-drawer.open{display:flex}
-    .mobile-drawer a{display:block;font-size:0.9rem;font-weight:500;
-      color:var(--ink3);text-decoration:none;letter-spacing:0.08em;
-      text-transform:uppercase;padding:0.9rem 0;
-      border-bottom:1px solid var(--border);transition:color .2s}
-    .mobile-drawer a:last-child{border-bottom:none}
-    .mobile-drawer a:hover,.mobile-drawer a.active{color:var(--ink)}
+    [data-theme="dark"] .project-card{background:#181824}
 
-    /* ═══════════════════════════════
-       RESPONSIVE — ≤ 640 px
-       ═══════════════════════════════ */
+    /* Responsive */
+    @media(max-width:1024px){
+      .project-grid{grid-template-columns:repeat(2,1fr)}
+      .filters,.section,.page-header,.upcoming-header{padding-left:2rem;padding-right:2rem}
+    }
     @media(max-width:640px){
-      /* Nav */
       nav{padding:0 1.25rem}
       .nav-links{display:none}
       .theme-toggle{margin-left:auto}
       .hamburger{display:flex}
-
-      /* Common sections / headers */
-      .page-header{padding:3.5rem 1.25rem 2.5rem}
-      .section{padding:3rem 1.25rem}
-      .content{padding:2.5rem 1.25rem;grid-template-columns:1fr;gap:2.5rem}
-      footer{padding:2rem 1.25rem;flex-direction:column;gap:0.4rem;text-align:center}
-      .flash-messages{padding:0 1.25rem}
-
-      /* Hero */
-      .hero{grid-template-columns:1fr;padding:2.5rem 1.25rem 3rem;min-height:auto;gap:0}
-      .hero-right{display:none}
-      .hero-left{padding:3rem 0 0}
-      .hero-left h1{font-size:clamp(2.6rem,9vw,3.5rem)}
-      .cta-row{flex-direction:column}
-      .btn-primary,.btn-ghost{width:100%;justify-content:center}
-
-      /* Stats */
-      .stats-row{grid-template-columns:1fr}
-      .stat{padding:1.75rem}
-
-      /* Skills grid */
-      .skills-grid{grid-template-columns:1fr}
-      .skill-card{padding:1.75rem}
-
-      /* CTA strip */
-      .contact-strip{padding:2.25rem 1.5rem;flex-direction:column;gap:1.5rem}
-      .contact-strip h2{font-size:1.8rem}
-      .btn-gold{width:100%;justify-content:center}
-
-      /* Projects */
+      .page-header{padding:3.5rem 1.25rem 2rem}
+      .filters{padding:2rem 1.25rem 0;gap:6px}
+      .filter-btn{font-size:0.72rem;padding:6px 12px}
+      .section{padding:2.5rem 1.25rem 3.5rem}
+      .upcoming-header{padding:0 1.25rem}
       .project-grid{grid-template-columns:1fr}
-      .project-card{padding:1.75rem}
-
-      /* Blog posts */
-      .posts-grid{grid-template-columns:1fr}
-      .post-card{padding:1.75rem}
-
-      /* Contact */
-      .form-card{padding:1.75rem}
-
-      /* Resume */
-      .timeline-item{padding:0 0 2.5rem 1.75rem}
-      .edu-item{padding:1.1rem 1.25rem}
+      footer{flex-direction:column;gap:0.5rem;text-align:center;padding:2rem 1.25rem}
     }
-
-    /* ═══════════════════════════════
-       RESPONSIVE — 641–960 px (tablet)
-       ═══════════════════════════════ */
-    @media(min-width:641px) and (max-width:960px){
-      nav{padding:0 2rem}
-      .nav-links{gap:1.5rem}
-      .page-header{padding:4.5rem 2rem 3rem}
-      .section{padding:4rem 2rem}
-      .hero{padding:2rem 2rem 3.5rem}
-      .stats-row{grid-template-columns:1fr 1fr}
-      .skills-grid{grid-template-columns:1fr 1fr}
-      .content{padding:3.5rem 2rem;gap:3rem}
-      .contact-strip{padding:3rem 2.5rem}
-      .project-card{padding:2rem;grid-template-columns:1fr}
-      .project-link{justify-self:start;margin-top:0.5rem}
-      .posts-grid{grid-template-columns:1fr}
-      footer{padding:2rem 2rem}
-      .flash-messages{padding:0 2rem}
-    }
-
   </style>
-
-  <script>
-    // Apply saved theme instantly to prevent flash of wrong theme
-    (function(){
-      var saved = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', saved);
-    })();
-  </script>
+  <script>(function(){var s=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',s);})();</script>
 </head>
 <body>
-  <nav>
-    <a href="{{ url_for('home') }}" class="nav-logo">NK<span class="nav-logo-dot"></span></a>
+  <nav id="navbar">
+    <a href="/" class="nav-logo">NK<span class="nav-logo-dot"></span></a>
     <ul class="nav-links">
-      <li><a href="{{ url_for('home') }}">Home</a></li>
-      <li><a href="{{ url_for('projects') }}" class="active">Projects</a></li>
-      <li><a href="{{ url_for('resume') }}">Resume</a></li>
-      <li><a href="{{ url_for('blog') }}">Blog</a></li>
-      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/projects" class="active">Projects</a></li>
+      <li><a href="/resume">Resume</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/contact">Contact</a></li>
     </ul>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileDrawer"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
-  <div class="mobile-drawer" id="mobileDrawer" role="navigation" aria-label="Mobile navigation">
-      <a href="{{ url_for('home') }}">Home</a>
-      <a href="{{ url_for('projects') }}" class="active">Projects</a>
-      <a href="{{ url_for('resume') }}">Resume</a>
-      <a href="{{ url_for('blog') }}">Blog</a>
-      <a href="{{ url_for('contact') }}">Contact</a>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <a href="/">Home</a>
+    <a href="/projects" class="active">Projects</a>
+    <a href="/resume">Resume</a>
+    <a href="/blog">Blog</a>
+    <a href="/contact">Contact</a>
   </div>
 
+  <main>
+    <div class="page-header">
+      <div class="page-eyebrow">Portfolio</div>
+      <h1>Applications &amp;<br>systems I've built</h1>
+      <p class="lead">Practical web applications and security systems — showcasing full-stack development, DevOps pipelines, and blue-team tooling.</p>
+    </div>
+    <hr class="divider">
+
+    <!-- Filter tabs -->
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All projects</button>
+      <button class="filter-btn" data-filter="flask">Flask</button>
+      <button class="filter-btn" data-filter="security">Security</button>
+      <button class="filter-btn" data-filter="ai">AI / Agents</button>
+      <button class="filter-btn" data-filter="live">Live</button>
+    </div>
+
+    <!-- Featured projects -->
+    <div class="section reveal">
+      <div class="section-label">Featured projects</div>
+      <div class="project-grid" id="featuredGrid">
+
+        <!-- School App -->
+        <div class="project-card" data-tags="flask live">
+          <div class="proj-thumb">
+            <!-- Replace src with: url_for('static', filename='images/thumbs/school-app.png') -->
+            <div class="proj-thumb-fallback" style="background:#e8f4ee">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#e8f4ee"/>
+                <rect x="24" y="24" width="432" height="32" rx="4" fill="#0a8f5e" opacity=".15"/>
+                <rect x="24" y="68" width="200" height="160" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="36" y="80" width="80" height="10" rx="2" fill="#0a8f5e" opacity=".5"/>
+                <rect x="36" y="98" width="176" height="1" fill="#0a8f5e" opacity=".15"/>
+                <rect x="36" y="108" width="60" height="8" rx="2" fill="#3c3c50" opacity=".25"/>
+                <rect x="36" y="122" width="140" height="8" rx="2" fill="#3c3c50" opacity=".15"/>
+                <rect x="36" y="136" width="100" height="8" rx="2" fill="#3c3c50" opacity=".15"/>
+                <rect x="36" y="150" width="120" height="8" rx="2" fill="#3c3c50" opacity=".15"/>
+                <rect x="240" y="68" width="216" height="74" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="252" y="80" width="60" height="8" rx="2" fill="#0a8f5e" opacity=".4"/>
+                <rect x="252" y="98" width="192" height="28" rx="3" fill="#0a8f5e" opacity=".12"/>
+                <rect x="240" y="154" width="104" height="74" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="356" y="154" width="100" height="74" rx="4" fill="#0a8f5e" opacity=".18"/>
+                <text x="240" y="200" font-family="'Outfit',sans-serif" font-size="13" fill="#0a8f5e" opacity=".7" font-weight="500">School App</text>
+              </svg>
+            </div>
+            <span class="proj-badge badge-live">Live</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">Flask · SQLite · Render</div>
+            <div class="proj-title"><a href="https://schoolapp-if2k.onrender.com" target="_blank">School App</a></div>
+            <p class="proj-desc">Admin dashboard with full CRUD — attendance tracking, exam management, and student records. Deployed live on Render.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Flask</span>
+              <span class="proj-tag">SQLite</span>
+              <span class="proj-tag">Bootstrap</span>
+              <span class="proj-tag">Render</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <a href="https://schoolapp-if2k.onrender.com" target="_blank" class="proj-link">Live ↗</a>
+          </div>
+        </div>
+
+        <!-- Company Website -->
+        <div class="project-card" data-tags="flask live">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#eef2fc">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#eef2fc"/>
+                <rect x="0" y="0" width="480" height="48" fill="#c9a84c" opacity=".18"/>
+                <rect x="24" y="14" width="60" height="18" rx="3" fill="#c9a84c" opacity=".5"/>
+                <rect x="200" y="80" width="80" height="12" rx="2" fill="#3c3c50" opacity=".35"/>
+                <rect x="140" y="104" width="200" height="8" rx="2" fill="#3c3c50" opacity=".18"/>
+                <rect x="160" y="118" width="160" height="8" rx="2" fill="#3c3c50" opacity=".12"/>
+                <rect x="196" y="140" width="88" height="30" rx="3" fill="#c9a84c" opacity=".6"/>
+                <rect x="24" y="196" width="120" height="56" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="160" y="196" width="120" height="56" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="296" y="196" width="120" height="56" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="36" y="208" width="60" height="8" rx="2" fill="#c9a84c" opacity=".5"/>
+                <rect x="172" y="208" width="60" height="8" rx="2" fill="#c9a84c" opacity=".5"/>
+                <rect x="308" y="208" width="60" height="8" rx="2" fill="#c9a84c" opacity=".5"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-live">Live</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">Flask · Bootstrap · Vercel</div>
+            <div class="proj-title"><a href="https://traced-tech.vercel.app" target="_blank">Company Website</a></div>
+            <p class="proj-desc">Professional company site showcasing services and projects. Clean templates with responsive styling deployed on Vercel for fast global delivery.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Flask</span>
+              <span class="proj-tag">Bootstrap</span>
+              <span class="proj-tag">Vercel</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <a href="https://traced-tech.vercel.app" target="_blank" class="proj-link">Live ↗</a>
+          </div>
+        </div>
+
+        <!-- Blogging Platform -->
+        <div class="project-card" data-tags="flask live">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#f5f0ea">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#f5f0ea"/>
+                <rect x="24" y="24" width="432" height="36" rx="4" fill="#0c0c14" opacity=".06"/>
+                <rect x="24" y="76" width="280" height="170" rx="4" fill="#fff" opacity=".8"/>
+                <rect x="36" y="90" width="140" height="14" rx="2" fill="#0c0c14" opacity=".35"/>
+                <rect x="36" y="112" width="256" height="8" rx="2" fill="#0c0c14" opacity=".15"/>
+                <rect x="36" y="126" width="220" height="8" rx="2" fill="#0c0c14" opacity=".1"/>
+                <rect x="36" y="140" width="240" height="8" rx="2" fill="#0c0c14" opacity=".1"/>
+                <rect x="36" y="172" width="256" height="60" rx="3" fill="#f2f1ed"/>
+                <rect x="48" y="184" width="80" height="8" rx="2" fill="#0c0c14" opacity=".25"/>
+                <rect x="48" y="198" width="160" height="6" rx="2" fill="#0c0c14" opacity=".1"/>
+                <rect x="316" y="76" width="140" height="80" rx="4" fill="#c9a84c" opacity=".2"/>
+                <rect x="328" y="90" width="80" height="10" rx="2" fill="#c9a84c" opacity=".6"/>
+                <rect x="316" y="168" width="140" height="78" rx="4" fill="#fff" opacity=".7"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-live">Live</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">Flask · React · Vercel</div>
+            <div class="proj-title"><a href="https://blogapp3-rho.vercel.app" target="_blank">Blogging Platform</a></div>
+            <p class="proj-desc">Full-stack app with user accounts, posts, and comments. Includes admin moderation panel and a tagging system for content discovery.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Flask</span>
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">Vercel</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <a href="https://blogapp3-rho.vercel.app" target="_blank" class="proj-link">Live ↗</a>
+          </div>
+        </div>
+
+        <!-- Task Manager -->
+        <div class="project-card" data-tags="flask live">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#eaf3ee">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#eaf3ee"/>
+                <rect x="24" y="24" width="432" height="40" rx="4" fill="#0a8f5e" opacity=".12"/>
+                <rect x="24" y="80" width="432" height="44" rx="3" fill="#fff" opacity=".8"/>
+                <circle cx="44" cy="102" r="8" fill="#0a8f5e" opacity=".4"/>
+                <rect x="60" y="96" width="160" height="8" rx="2" fill="#0c0c14" opacity=".3"/>
+                <rect x="60" y="108" width="100" height="6" rx="2" fill="#0c0c14" opacity=".12"/>
+                <rect x="380" y="94" width="64" height="16" rx="2" fill="#c9a84c" opacity=".5"/>
+                <rect x="24" y="136" width="432" height="44" rx="3" fill="#fff" opacity=".8"/>
+                <circle cx="44" cy="158" r="8" fill="#0a8f5e" opacity=".7"/>
+                <rect x="60" y="152" width="200" height="8" rx="2" fill="#0c0c14" opacity=".3"/>
+                <rect x="60" y="164" width="120" height="6" rx="2" fill="#0c0c14" opacity=".12"/>
+                <rect x="380" y="150" width="64" height="16" rx="2" fill="#0a8f5e" opacity=".3"/>
+                <rect x="24" y="192" width="432" height="44" rx="3" fill="#fff" opacity=".5"/>
+                <circle cx="44" cy="214" r="8" fill="#3c3c50" opacity=".2"/>
+                <rect x="60" y="208" width="140" height="8" rx="2" fill="#0c0c14" opacity=".2"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-live">Live</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">Flask · Tailwind · Render</div>
+            <div class="proj-title"><a href="https://task-manager-qzx7.onrender.com" target="_blank">Task Manager</a></div>
+            <p class="proj-desc">CRUD task management with deadlines and reminders. Clean Tailwind styling with GitHub integration for version control.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Flask</span>
+              <span class="proj-tag">Tailwind</span>
+              <span class="proj-tag">Render</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <a href="https://task-manager-qzx7.onrender.com" target="_blank" class="proj-link">Live ↗</a>
+          </div>
+        </div>
+
+        <!-- Church Website -->
+        <div class="project-card" data-tags="live">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#f0eaf8">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#f0eaf8"/>
+                <rect x="0" y="0" width="480" height="60" fill="#6c3fa0" opacity=".15"/>
+                <polygon points="240,20 260,55 220,55" fill="#6c3fa0" opacity=".3"/>
+                <rect x="228" y="55" width="24" height="40" fill="#6c3fa0" opacity=".2"/>
+                <rect x="24" y="100" width="432" height="80" rx="3" fill="#fff" opacity=".6"/>
+                <rect x="140" y="116" width="200" height="12" rx="2" fill="#6c3fa0" opacity=".3"/>
+                <rect x="160" y="136" width="160" height="8" rx="2" fill="#3c3c50" opacity=".2"/>
+                <rect x="24" y="196" width="135" height="56" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="173" y="196" width="134" height="56" rx="4" fill="#6c3fa0" opacity=".15"/>
+                <rect x="321" y="196" width="135" height="56" rx="4" fill="#fff" opacity=".7"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-progress">In Progress</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">HTML · CSS · JavaScript · Vercel</div>
+            <div class="proj-title"><a href="https://thechurch-mauve.vercel.app" target="_blank">Church Website</a></div>
+            <p class="proj-desc">Full church website with service times, sermons, and congregation info. Responsive, accessible, and mobile-first design.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">HTML/CSS</span>
+              <span class="proj-tag">JavaScript</span>
+              <span class="proj-tag">Vercel</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <a href="https://thechurch-mauve.vercel.app" target="_blank" class="proj-link">View ↗</a>
+          </div>
+        </div>
+
+        <!-- Blue Team Security Dashboard -->
+        <div class="project-card" data-tags="flask security">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#0e1520">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#0e1520"/>
+                <rect x="24" y="24" width="140" height="10" rx="2" fill="#185fa5" opacity=".7"/>
+                <rect x="24" y="48" width="432" height="2" fill="#185fa5" opacity=".12"/>
+                <!-- Alert rows -->
+                <rect x="24" y="64" width="432" height="28" rx="2" fill="#1a2a3a"/>
+                <rect x="24" y="64" width="3" height="28" fill="#e24b4a"/>
+                <rect x="36" y="72" width="120" height="8" rx="2" fill="#e24b4a" opacity=".5"/>
+                <rect x="300" y="70" width="60" height="12" rx="2" fill="#e24b4a" opacity=".25"/>
+                <rect x="24" y="100" width="432" height="28" rx="2" fill="#1a2a3a"/>
+                <rect x="24" y="100" width="3" height="28" fill="#ef9f27"/>
+                <rect x="36" y="108" width="160" height="8" rx="2" fill="#ef9f27" opacity=".45"/>
+                <rect x="300" y="106" width="60" height="12" rx="2" fill="#ef9f27" opacity=".25"/>
+                <rect x="24" y="136" width="432" height="28" rx="2" fill="#1a2a3a"/>
+                <rect x="24" y="136" width="3" height="28" fill="#378add"/>
+                <rect x="36" y="144" width="200" height="8" rx="2" fill="#378add" opacity=".45"/>
+                <!-- Stats -->
+                <rect x="24" y="182" width="100" height="60" rx="3" fill="#1a2a3a"/>
+                <rect x="140" y="182" width="100" height="60" rx="3" fill="#1a2a3a"/>
+                <rect x="256" y="182" width="100" height="60" rx="3" fill="#1a2a3a"/>
+                <rect x="372" y="182" width="84" height="60" rx="3" fill="#1a2a3a"/>
+                <rect x="36" y="195" width="40" height="12" rx="2" fill="#e24b4a" opacity=".6"/>
+                <rect x="36" y="213" width="60" height="6" rx="2" fill="#378add" opacity=".3"/>
+                <rect x="152" y="195" width="40" height="12" rx="2" fill="#ef9f27" opacity=".6"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-progress">In Progress</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">Flask · SQLite · Docker</div>
+            <div class="proj-title"><a href="https://blueteam-flax.vercel.app" target="_blank">Blue Team Security Dashboard</a></div>
+            <p class="proj-desc">Web-based SIEM-lite for real-time log ingestion and threat detection. Detects SQLi, XSS, directory traversal, and PowerShell malware via custom rules. Dockerized for production.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Flask</span>
+              <span class="proj-tag">Docker</span>
+              <span class="proj-tag">SQLAlchemy</span>
+              <span class="proj-tag">SIEM</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <a href="https://blueteam-flax.vercel.app" target="_blank" class="proj-link">View ↗</a>
+          </div>
+        </div>
+
+        <!-- Stacey Dashboard -->
+        <div class="project-card" data-tags="flask ai">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#f5f5f0">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#f5f5f0"/>
+                <rect x="0" y="0" width="160" height="270" fill="#0c0c14" opacity=".06"/>
+                <rect x="12" y="24" width="136" height="30" rx="3" fill="#0c0c14" opacity=".1"/>
+                <rect x="20" y="70" width="100" height="8" rx="2" fill="#c9a84c" opacity=".5"/>
+                <rect x="20" y="86" width="120" height="8" rx="2" fill="#0c0c14" opacity=".2"/>
+                <rect x="20" y="102" width="90" height="8" rx="2" fill="#0c0c14" opacity=".15"/>
+                <rect x="20" y="118" width="110" height="8" rx="2" fill="#0c0c14" opacity=".15"/>
+                <!-- Main area -->
+                <rect x="180" y="24" width="276" height="60" rx="3" fill="#fff" opacity=".8"/>
+                <rect x="192" y="36" width="80" height="10" rx="2" fill="#0c0c14" opacity=".3"/>
+                <rect x="192" y="52" width="160" height="8" rx="2" fill="#0a8f5e" opacity=".3"/>
+                <rect x="180" y="100" width="130" height="80" rx="3" fill="#fff" opacity=".7"/>
+                <rect x="192" y="112" width="50" height="24" rx="2" fill="#c9a84c" opacity=".3"/>
+                <rect x="192" y="142" width="80" height="8" rx="2" fill="#0c0c14" opacity=".2"/>
+                <rect x="324" y="100" width="132" height="80" rx="3" fill="#fff" opacity=".7"/>
+                <rect x="180" y="196" width="276" height="48" rx="3" fill="#0a8f5e" opacity=".1"/>
+                <rect x="192" y="208" width="120" height="8" rx="2" fill="#0a8f5e" opacity=".4"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-progress">In Progress</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">Python · Flask · Telegram · Gemini AI</div>
+            <div class="proj-title">Stacey — AI Job-Hunting Dashboard</div>
+            <p class="proj-desc">Flask web dashboard monitoring an autonomous Telegram job-hunting bot in real time — live logs, email counts, uptime, CV preview, and bot control.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Flask</span>
+              <span class="proj-tag">Telegram</span>
+              <span class="proj-tag">Gemini AI</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <a href="#" class="proj-link">GitHub ↗</a>
+          </div>
+        </div>
+
+        <!-- Stacey Backend -->
+        <div class="project-card" data-tags="ai">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#0e1a14">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#0e1a14"/>
+                <!-- Terminal-like window -->
+                <rect x="24" y="24" width="432" height="222" rx="5" fill="#111f16"/>
+                <rect x="24" y="24" width="432" height="28" rx="5" fill="#1a2e1e"/>
+                <rect x="36" y="33" width="8" height="8" rx="50" fill="#e24b4a" opacity=".8"/>
+                <rect x="52" y="33" width="8" height="8" rx="50" fill="#ef9f27" opacity=".8"/>
+                <rect x="68" y="33" width="8" height="8" rx="50" fill="#639922" opacity=".8"/>
+                <!-- Code lines -->
+                <rect x="40" y="70" width="60" height="7" rx="2" fill="#639922" opacity=".7"/>
+                <rect x="108" y="70" width="100" height="7" rx="2" fill="#5DCAA5" opacity=".5"/>
+                <rect x="40" y="86" width="40" height="7" rx="2" fill="#378add" opacity=".6"/>
+                <rect x="88" y="86" width="140" height="7" rx="2" fill="#e8e8f0" opacity=".3"/>
+                <rect x="40" y="102" width="20" height="7" rx="2" fill="#ef9f27" opacity=".6"/>
+                <rect x="68" y="102" width="200" height="7" rx="2" fill="#e8e8f0" opacity=".25"/>
+                <rect x="40" y="120" width="360" height="1" fill="#639922" opacity=".1"/>
+                <rect x="40" y="132" width="80" height="7" rx="2" fill="#639922" opacity=".5"/>
+                <rect x="128" y="132" width="160" height="7" rx="2" fill="#e8e8f0" opacity=".25"/>
+                <rect x="40" y="148" width="240" height="7" rx="2" fill="#5DCAA5" opacity=".35"/>
+                <rect x="40" y="166" width="180" height="7" rx="2" fill="#e24b4a" opacity=".3"/>
+                <rect x="40" y="182" width="280" height="7" rx="2" fill="#e8e8f0" opacity=".2"/>
+                <!-- Cursor blink -->
+                <rect x="40" y="200" width="8" height="14" rx="1" fill="#5DCAA5" opacity=".9"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-running">Running Live</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">Python · Gemini 2.0 · Telegram · Gmail SMTP</div>
+            <div class="proj-title">Stacey-Backend — Autonomous Job Agent</div>
+            <p class="proj-desc">Scrapes Fuzu, BrighterMonday, LinkedIn and more on a 6-hour cycle. Scores every job against a CV using Gemini 2.0, drafts tailored cover letters, and delivers results to Telegram for one-tap approval. Built in 32 hours.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">Gemini 2.0</span>
+              <span class="proj-tag">Telegram</span>
+              <span class="proj-tag">Agents</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-link muted">Running Live 🦞</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Upcoming projects -->
+    <div class="section reveal" style="padding-top:3.5rem">
+      <div class="section-label">Upcoming projects</div>
+      <div class="project-grid">
+
+        <div class="project-card upcoming" data-tags="flask">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#eef4fd">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#eef4fd"/>
+                <rect x="24" y="80" width="200" height="110" rx="4" fill="#fff" opacity=".7"/>
+                <circle cx="88" cy="116" r="24" fill="#378add" opacity=".3"/>
+                <rect x="36" y="150" width="80" height="8" rx="2" fill="#378add" opacity=".4"/>
+                <rect x="36" y="164" width="120" height="6" rx="2" fill="#0c0c14" opacity=".15"/>
+                <rect x="256" y="80" width="200" height="110" rx="4" fill="#fff" opacity=".7"/>
+                <circle cx="320" cy="116" r="24" fill="#378add" opacity=".2"/>
+                <rect x="268" y="150" width="80" height="8" rx="2" fill="#378add" opacity=".3"/>
+                <!-- Chat bubbles -->
+                <rect x="80" y="200" width="140" height="30" rx="14" fill="#378add" opacity=".25"/>
+                <rect x="256" y="200" width="140" height="30" rx="14" fill="#0c0c14" opacity=".08"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-soon">Coming Soon</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">React · Flask · WebSockets</div>
+            <div class="proj-title">React Chat Application</div>
+            <p class="proj-desc">Real-time messaging with React and Flask-SocketIO. Message threading, input handling, and responsive design.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">WebSockets</span>
+              <span class="proj-tag">Flask</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-link muted">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="project-card upcoming" data-tags="flask">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#fdf4ea">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#fdf4ea"/>
+                <rect x="24" y="24" width="280" height="222" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="36" y="40" width="160" height="12" rx="2" fill="#0c0c14" opacity=".3"/>
+                <rect x="36" y="64" width="120" height="100" rx="3" fill="#faeeda" opacity=".8"/>
+                <rect x="48" y="80" width="60" height="8" rx="2" fill="#ba7517" opacity=".5"/>
+                <rect x="48" y="96" width="80" height="6" rx="2" fill="#0c0c14" opacity=".2"/>
+                <rect x="48" y="108" width="70" height="6" rx="2" fill="#0c0c14" opacity=".15"/>
+                <rect x="48" y="130" width="96" height="20" rx="2" fill="#ba7517" opacity=".3"/>
+                <rect x="172" y="64" width="120" height="100" rx="3" fill="#faeeda" opacity=".5"/>
+                <rect x="36" y="180" width="256" height="50" rx="3" fill="#ba7517" opacity=".15"/>
+                <rect x="48" y="196" width="80" height="8" rx="2" fill="#ba7517" opacity=".5"/>
+                <!-- Stripe-like right panel -->
+                <rect x="316" y="24" width="140" height="222" rx="4" fill="#0c0c14" opacity=".06"/>
+                <rect x="328" y="40" width="100" height="10" rx="2" fill="#0c0c14" opacity=".25"/>
+                <rect x="328" y="64" width="116" height="32" rx="3" fill="#ba7517" opacity=".25"/>
+                <rect x="328" y="108" width="116" height="1" fill="#0c0c14" opacity=".08"/>
+                <rect x="328" y="120" width="80" height="8" rx="2" fill="#0c0c14" opacity=".2"/>
+                <rect x="328" y="136" width="116" height="88" rx="3" fill="#fff" opacity=".6"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-soon">Coming Soon</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">React · Flask · Stripe · PostgreSQL</div>
+            <div class="proj-title">E-Commerce Store</div>
+            <p class="proj-desc">Full-stack store with product listings, cart, and Stripe checkout. User auth, order history, and admin product management. PostgreSQL on Render.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">Stripe</span>
+              <span class="proj-tag">PostgreSQL</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-link muted">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="project-card upcoming" data-tags="ai">
+          <div class="proj-thumb">
+            <div class="proj-thumb-fallback" style="background:#f0f4f0">
+              <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                <rect width="480" height="270" fill="#f0f4f0"/>
+                <rect x="24" y="24" width="432" height="80" rx="4" fill="#fff" opacity=".8"/>
+                <rect x="36" y="40" width="80" height="10" rx="2" fill="#0c0c14" opacity=".3"/>
+                <rect x="36" y="60" width="400" height="32" rx="3" fill="#f2f1ed"/>
+                <rect x="44" y="68" width="120" height="8" rx="2" fill="#3c3c50" opacity=".25"/>
+                <!-- Score bar -->
+                <rect x="24" y="120" width="432" height="16" rx="8" fill="#e8e8e0"/>
+                <rect x="24" y="120" width="320" height="16" rx="8" fill="#0a8f5e" opacity=".5"/>
+                <rect x="24" y="148" width="432" height="80" rx="4" fill="#fff" opacity=".7"/>
+                <rect x="36" y="162" width="60" height="8" rx="2" fill="#0a8f5e" opacity=".5"/>
+                <rect x="36" y="178" width="380" height="6" rx="2" fill="#0c0c14" opacity=".12"/>
+                <rect x="36" y="190" width="320" height="6" rx="2" fill="#0c0c14" opacity=".1"/>
+                <rect x="36" y="202" width="360" height="6" rx="2" fill="#0c0c14" opacity=".1"/>
+              </svg>
+            </div>
+            <span class="proj-badge badge-soon">Coming Soon</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-kicker">React · Flask · OpenAI API</div>
+            <div class="proj-title">AI Resume Reviewer</div>
+            <p class="proj-desc">Paste a job description and your CV — get instant AI-powered feedback. Scores relevance, highlights gaps, and suggests targeted improvements.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">OpenAI</span>
+              <span class="proj-tag">Flask</span>
+            </div>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-link muted">Coming Soon</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Nahum Karisa — Portfolio</span>
+    <span>© 2026</span>
+  </footer>
+
   <script>
-    // Hamburger menu
+    // Nav scroll
+    const nav = document.getElementById('navbar');
+    if(nav) window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+    // Reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold: 0.08});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Hamburger
     (function(){
       var btn = document.getElementById('hamburgerBtn');
       var drawer = document.getElementById('mobileDrawer');
@@ -205,7 +693,6 @@
         btn.classList.toggle('open', open);
         btn.setAttribute('aria-expanded', open);
       });
-      // Close on link click
       drawer.querySelectorAll('a').forEach(function(a){
         a.addEventListener('click', function(){
           drawer.classList.remove('open');
@@ -214,9 +701,8 @@
         });
       });
     })();
-  </script>
-  <script>
-    // Wire up theme toggle now that DOM exists
+
+    // Theme toggle
     (function(){
       var root = document.documentElement;
       var toggle = document.getElementById('themeToggle');
@@ -229,173 +715,23 @@
         toggle.textContent = next === 'dark' ? '☀️' : '🌙';
       });
     })();
-  </script>
 
-  <main>
-    <div class="page-header">
-      <div class="page-eyebrow">Portfolio</div>
-      <h1>Applications &amp;<br>systems I've built</h1>
-      <p class="lead">A showcase of practical web applications and systems — highlighting my transition into full-stack development and DevOps.</p>
-    </div>
-    <hr class="divider">
-
-    <div class="section reveal">
-      <div class="section-label">Featured projects</div>
-      <div class="project-grid">
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">Flask · SQLite · Render</div>
-            <div class="project-title"><a href="https://schoolapp-if2k.onrender.com" target="_blank">School App</a></div>
-            <ul class="project-desc">
-              <li>Built with Flask, SQLite, and Bootstrap — admin dashboard with full CRUD.</li>
-              <li>Features attendance tracking, exam management, and student records.</li>
-              <li>Deployed live on Render.</li>
-            </ul>
-          </div>
-          <a href="https://schoolapp-if2k.onrender.com" target="_blank" class="project-link">Live ↗</a>
-        </div>
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">Flask · Bootstrap · Vercel</div>
-            <div class="project-title"><a href="https://traced-tech.vercel.app" target="_blank">Company Website</a></div>
-            <ul class="project-desc">
-              <li>Flask + Bootstrap site showcasing services and projects.</li>
-              <li>Professional polish with clean templates and responsive styling.</li>
-              <li>Deployed on Vercel for fast global hosting.</li>
-            </ul>
-          </div>
-          <a href="https://traced-tech.vercel.app" target="_blank" class="project-link">Live ↗</a>
-        </div>
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">Flask · React · Vercel</div>
-            <div class="project-title"><a href="https://blogapp3-rho.vercel.app" target="_blank"> Blogging Platform</a></div>
-            <ul class="project-desc">
-              <li>Full-stack app with user accounts, posts, and comments.</li>
-              <li>Admin moderation panel and tagging system.</li>
-              <li>Deployed on Vercel.</li>
-            </ul>
-          </div>
-          <a href="https://blogapp3-rho.vercel.app" target="_blank" class="project-link">Live ↗</a>
-        </div>
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">Flask · Tailwind · Render</div>
-            <div class="project-title"><a href= "https://task-manager-qzx7.onrender.com" target="_blank">Task Manager</a></div>
-            <ul class="project-desc">
-              <li>Flask app with CRUD tasks, deadlines, and reminders.</li>
-              <li>Clean styling and GitHub integration for version control.</li>
-            </ul>
-          </div>
-          <a href="https://task-manager-qzx7.onrender.com" target="_blank" class="project-link">Live ↗</a>
-        </div>
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">HTML · CSS · JavaScript · Vercel</div>
-            <div class="project-title"><a href="https://thechurch-mauve.vercel.app" target="_blank">Church Website</a></div>
-            <ul class="project-desc">
-              <li>Full church website with service times, sermons, and congregation info.</li>
-              <li>Clean, responsive design built for accessibility and mobile-first experience.</li>
-              <li>Deployed live on Vercel with fast global delivery.</li>
-            </ul>
-          </div>
-          <a href="https://thechurch-mauve.vercel.app" target="_blank" class="project-link">In Progress</a>
-        </div>
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">Flask · SQLite · Docker</div>
-            <div class="project-title">
-              <a href="https://blueteam-flax.vercel.app" target="_blank">Blue Team Security Dashboard</a>
-              </div>
-            <ul class="project-desc">
-              <li>Web-based SIEM-lite for real-time log ingestion and threat detection.</li>
-              <li>Detects SQLi, XSS, directory traversal, privilege escalation, and PowerShell malware via custom rules.</li>
-              <li>Dockerized with Flask, SQLAlchemy, and Gunicorn for production deployment.</li>
-            </ul>
-          </div>
-          <a href="https://blueteam-flax.vercel.app" target="_blank" class="project-link">In Progress ↗</a>
-        </div>
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">Python · Flask · Telegram · Gemini AI</div>
-            <div class="project-title"><a href="#" target="_blank">Stacey — AI Job-Hunting Control Panel</a></div>
-            <ul class="project-desc">
-              <li>Flask web dashboard that monitors an autonomous Telegram job-hunting bot in real time.</li>
-              <li>Displays live logs, email and job counts, uptime, and hunt status pushed directly by the bot.</li>
-              <li>Reads and previews CV and cover letter files, enabling the bot to tailor applications on the fly.</li>
-              <li>Runs locally on Linux; bot powered by Gemini AI for job scoring and cover letter drafting.</li>
-            </ul>
-          </div>
-          <a href="#" target="_blank" class="project-link">GitHub ↗</a>
-        </div>
-        <div class="project-card">
-          <div class="proj-left">
-            <div class="proj-kicker">Python · Gemini 2.0 · Telegram · Gmail SMTP</div>
-            <div class="project-title">Stacey-Backend — Autonomous Job Hunting Agent</div>
-            <ul class="project-desc">
-              <li>Scrapes Fuzu, BrighterMonday, JobWebKenya, MyJobMag, and LinkedIn on a 6-hour cycle.</li>
-              <li>Scores every job against a CV profile using Gemini 2.0 Flash, then drafts a tailored cover letter for each strong match.</li>
-              <li>Delivers results to Telegram for one-tap approval before sending — fully autonomous, human in the loop.</li>
-              <li>Built and shipped in 32 hours. Running live on Linux.</li>
-            </ul>
-          </div>
-          <span class="project-link muted">Running Live 🦞</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="section reveal" style="padding-top:0">
-      <div class="section-label">Upcoming projects</div>
-      <div class="project-grid">
-        <div class="project-card upcoming">
-          <div class="proj-left">
-            <div class="proj-kicker">React · Flask · WebSockets</div>
-            <div class="project-title">React Chat Application</div>
-            <ul class="project-desc">
-              <li>Real-time messaging with React and Flask-SocketIO.</li>
-              <li>Message threading, input handling, and responsive design.</li>
-            </ul>
-          </div>
-          <span class="project-link muted">Coming Soon</span>
-        </div>
-        <div class="project-card upcoming">
-          <div class="proj-left">
-            <div class="proj-kicker">React · Flask · Stripe · PostgreSQL</div>
-            <div class="project-title">E-Commerce Store</div>
-            <ul class="project-desc">
-              <li>Full-stack store with product listings, cart, and Stripe checkout.</li>
-              <li>User authentication, order history, and admin product management.</li>
-              <li>Deployed on Render with PostgreSQL for production-grade data handling.</li>
-            </ul>
-          </div>
-          <span class="project-link muted">Coming soon</span>
-        </div>
-        <div class="project-card upcoming">
-          <div class="proj-left">
-            <div class="proj-kicker">React · Flask · OpenAI API</div>
-            <div class="project-title">AI Resume Reviewer</div>
-            <ul class="project-desc">
-              <li>Paste a job description and your CV — get instant AI-powered feedback.</li>
-              <li>Scores relevance, highlights gaps, and suggests improvements.</li>
-              <li>Built with OpenAI API, Flask backend, and a clean React interface.</li>
-            </ul>
-          </div>
-          <span class="project-link muted">Coming soon</span>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <span>Nahum Karisa — Portfolio</span>
-    <span>© 2026</span>
-  </footer>
-
-  <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-    }, {threshold: 0.1});
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Filter
+    document.querySelectorAll('.filter-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        var filter = btn.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(function(card){
+          if(filter === 'all'){
+            card.classList.remove('hidden');
+          } else {
+            var tags = (card.dataset.tags || '').split(' ');
+            card.classList.toggle('hidden', !tags.includes(filter));
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
