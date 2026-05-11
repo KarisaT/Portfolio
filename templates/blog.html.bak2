@@ -66,7 +66,12 @@
     .page-header .lead{font-size:1.05rem;color:var(--ink2);max-width:56ch;line-height:1.85;font-weight:300}
     .divider{border:none;border-top:1px solid var(--border);max-width:1280px;margin:0 auto}
 
-
+    /* Write button in header */
+    .header-actions{display:flex;align-items:center;gap:12px;margin-top:2rem;flex-wrap:wrap}
+    .btn-write{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:12px 24px;border-radius:3px;font-size:0.85rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;border:none;cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif}
+    .btn-write:hover{background:var(--gold);color:var(--ink)}
+    .btn-ghost-sm{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--ink3);padding:11px 20px;border-radius:3px;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;border:1.5px solid var(--border);cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif}
+    .btn-ghost-sm:hover{border-color:var(--ink2);color:var(--ink)}
 
     /* Section */
     .section{max-width:1280px;margin:0 auto;padding:4rem 3.5rem}
@@ -104,14 +109,49 @@
     .post-link{font-size:0.75rem;font-weight:600;color:var(--ink);letter-spacing:0.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border:1.5px solid var(--border2);border-radius:3px;transition:all .2s;cursor:pointer;background:none;font-family:'Outfit',sans-serif}
     .post-link:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
     .post-link.expanded{background:var(--surface2);border-color:var(--border)}
-.ai-loading{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--ink3);font-style:italic;animation:shimmer 1.2s ease-in-out infinite}
+    .btn-delete{font-size:0.72rem;font-weight:500;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase;padding:7px 10px;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;background:none;font-family:'Outfit',sans-serif;transition:all .2s}
+    .btn-delete:hover{color:#c0392b;border-color:#c0392b}
+    .ai-loading{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--ink3);font-style:italic;animation:shimmer 1.2s ease-in-out infinite}
 
     /* Empty state */
     .empty-state{text-align:center;padding:4rem 2rem;color:var(--ink3)}
     .empty-state .big{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink2);margin-bottom:0.5rem;font-weight:500}
     .empty-state p{font-size:0.92rem;margin-bottom:1.5rem}
 
+    /* ── COMPOSE MODAL ── */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:400;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(4px)}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--surface);border:1px solid var(--border2);border-radius:8px;width:100%;max-width:700px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.2);animation:fadeUp .3s ease both}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.75rem 2rem 1.25rem;border-bottom:1px solid var(--border);flex-shrink:0}
+    .modal-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;color:var(--ink)}
+    .modal-close{background:none;border:none;color:var(--ink3);font-size:1.4rem;cursor:pointer;padding:4px 8px;border-radius:3px;transition:color .2s;line-height:1}
+    .modal-close:hover{color:var(--ink)}
+    .modal-body{padding:1.5rem 2rem;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:1.25rem}
+    .form-group{display:flex;flex-direction:column;gap:7px}
+    .form-label{font-size:0.72rem;font-weight:600;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase}
+    .form-input{width:100%;padding:11px 14px;border:1.5px solid var(--border2);border-radius:3px;font-size:0.93rem;font-family:'Outfit',sans-serif;color:var(--ink);background:var(--surface2);transition:border-color .2s,box-shadow .2s;outline:none;font-weight:300}
+    .form-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.1)}
+    .form-input::placeholder{color:var(--ink3);opacity:0.7}
+    textarea.form-input{min-height:140px;resize:vertical;line-height:1.7}
+    .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a8a9a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+    .ai-hint{font-size:0.78rem;color:var(--ink3);display:flex;align-items:center;gap:6px}
+    .ai-dot{width:6px;height:6px;border-radius:50%;background:#6c3fa0;flex-shrink:0}
 
+    /* AI expand controls */
+    .ai-controls{background:rgba(108,63,160,0.06);border:1px solid rgba(108,63,160,0.18);border-radius:4px;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:8px}
+    .ai-controls-label{font-size:0.7rem;font-weight:600;color:#6c3fa0;letter-spacing:0.1em;text-transform:uppercase}
+    .ai-tone-row{display:flex;gap:6px;flex-wrap:wrap}
+    .tone-btn{font-size:0.72rem;font-weight:500;padding:5px 12px;border-radius:2px;border:1px solid rgba(108,63,160,0.25);background:transparent;color:#6c3fa0;cursor:pointer;transition:all .15s;font-family:'Outfit',sans-serif}
+    .tone-btn:hover,.tone-btn.active{background:#6c3fa0;color:#fff;border-color:#6c3fa0}
+    .btn-ai-expand{display:flex;align-items:center;gap:8px;background:#6c3fa0;color:#fff;padding:10px 20px;border-radius:3px;font-size:0.82rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;border:none;cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif;width:fit-content}
+    .btn-ai-expand:hover{background:#5a3490;transform:translateY(-1px)}
+    .btn-ai-expand:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+    .modal-footer{padding:1.25rem 2rem 1.75rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;flex-wrap:wrap}
+    .btn-publish{background:var(--ink);color:#fff;padding:12px 28px;border-radius:3px;font-size:0.85rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;border:none;cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif}
+    .btn-publish:hover{background:var(--gold);color:var(--ink)}
+    .btn-cancel{background:transparent;color:var(--ink3);padding:11px 20px;border-radius:3px;font-size:0.82rem;font-weight:500;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;letter-spacing:0.04em}
+    .btn-cancel:hover{border-color:var(--ink2);color:var(--ink)}
 
     footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
     footer a{color:var(--ink3);text-decoration:none;transition:color .2s}
@@ -123,6 +163,7 @@
       .page-header{padding:3.5rem 1.25rem 2rem}.section{padding:3rem 1.25rem}
       .posts-grid{grid-template-columns:1fr}.post-card{padding:1.75rem}
       footer{padding:2rem 1.25rem;flex-direction:column;gap:0.4rem;text-align:center}
+      .modal{max-height:100vh;border-radius:0}.modal-body{padding:1.25rem 1.5rem}.modal-header{padding:1.25rem 1.5rem 1rem}.modal-footer{padding:1rem 1.5rem 1.25rem}
     }
   </style>
 </head>
@@ -152,7 +193,10 @@
       <div class="page-eyebrow">Writing</div>
       <h1>Field notes &amp;<br>technical thinking</h1>
       <p class="lead">Practical writing on cybersecurity, DevOps, and enterprise IT — from someone who's done the job, not just studied it.</p>
-
+      <div class="header-actions">
+        <button class="btn-write" onclick="openCompose()">✦ Write a post</button>
+        <button class="btn-ghost-sm" id="clearAllBtn" onclick="confirmClearAll()" style="display:none">Clear all posts</button>
+      </div>
     </div>
     <hr class="divider">
 
@@ -177,7 +221,8 @@
       <div class="posts-grid" id="postsGrid"></div>
       <div class="empty-state" id="emptyState" style="display:none">
         <div class="big">No posts yet</div>
-        <p>Check back soon for new writing.</p>
+        <p>Write your first post — or switch the topic filter.</p>
+        <button class="btn-write" onclick="openCompose()">✦ Write something</button>
       </div>
     </div>
   </main>
@@ -186,6 +231,61 @@
     <span>Nahum Karisa — Portfolio</span>
     <span><a href="/contact">Get in touch</a> · © 2026</span>
   </footer>
+
+  <!-- ── COMPOSE MODAL ── -->
+  <div class="modal-overlay" id="composeModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Write a post</div>
+        <button class="modal-close" onclick="closeCompose()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="postTitle" placeholder="What's the post about?">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input form-select" id="postCategory">
+            <option value="Blue Team">Blue Team</option>
+            <option value="Linux">Linux</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Flask & Python">Flask &amp; Python</option>
+            <option value="Governance">Governance</option>
+            <option value="Career">Career</option>
+            <option value="Tools & Workflow">Tools &amp; Workflow</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your notes / key points</label>
+          <textarea class="form-input" id="postNotes" placeholder="Jot down your main ideas, bullet points, or a rough draft. AI can expand this into a full post for you."></textarea>
+          <div class="ai-hint"><div class="ai-dot"></div>AI can expand your notes into a full post</div>
+        </div>
+
+        <!-- AI controls -->
+        <div class="ai-controls">
+          <div class="ai-controls-label">✦ AI Expand</div>
+          <div class="ai-tone-row" id="toneRow">
+            <button class="tone-btn active" data-tone="technical">Technical</button>
+            <button class="tone-btn" data-tone="conversational">Conversational</button>
+            <button class="tone-btn" data-tone="tutorial">Tutorial</button>
+            <button class="tone-btn" data-tone="opinionated">Opinionated</button>
+          </div>
+          <button class="btn-ai-expand" id="aiExpandBtn" onclick="aiExpand()">✦ Expand with AI</button>
+          <div class="ai-loading" id="aiLoading" style="display:none">✦ Writing your post…</div>
+        </div>
+
+        <div class="form-group" id="bodyGroup" style="display:none">
+          <label class="form-label">Full post <span style="font-size:0.68rem;color:var(--gold);font-weight:500;letter-spacing:0.06em">AI-generated — edit freely</span></label>
+          <textarea class="form-input" id="postBody" style="min-height:220px"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeCompose()">Cancel</button>
+        <button class="btn-publish" onclick="publishPost()">Publish post →</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ── Theme ──
@@ -263,6 +363,7 @@
 
     // ── State ──
     var activeTopic = 'all';
+    var selectedTone = 'technical';
 
     function getStoredPosts(){
       try {
@@ -299,6 +400,9 @@
       var posts = loadPosts();
       var grid = document.getElementById('postsGrid');
       var empty = document.getElementById('emptyState');
+      var clearBtn = document.getElementById('clearAllBtn');
+      var userPosts = posts.filter(function(p){ return !p.seeded; });
+      clearBtn.style.display = userPosts.length > 0 ? '' : 'none';
       var filtered = activeTopic === 'all' ? posts : posts.filter(function(p){ return p.category === activeTopic; });
       grid.innerHTML = '';
       if(!filtered.length){
@@ -320,7 +424,7 @@
       var bodyParas = post.body.split('\n\n').map(function(p){ return '<p>'+escHtml(p)+'</p>'; }).join('');
       var fullId = 'pf-'+post.id;
       var aiB = post.aiGenerated ? '<span class="ai-badge">AI Expanded</span>' : '';
-      var deleteBtn = '';
+      var deleteBtn = post.seeded ? '' : '<button class="btn-delete" onclick="deletePost(\''+post.id+'\')">Delete</button>';
       card.innerHTML = '<div class="post-meta"><span class="post-date">'+escHtml(post.date)+'</span><div class="post-dot"></div><span class="post-category">'+escHtml(post.category)+'</span>'+aiB+'</div><div class="post-title">'+escHtml(post.title)+'</div><div class="post-excerpt">'+escHtml(post.excerpt)+'</div><div class="post-full" id="'+fullId+'">'+bodyParas+'</div><div class="post-footer"><span class="post-read">'+escHtml(post.readTime||'')+'</span><div class="post-actions">'+deleteBtn+'<button class="post-link" onclick="togglePost(\''+fullId+'\', this)">Read more ↓</button></div></div>';
       return card;
     }
@@ -337,6 +441,18 @@
       btn.classList.toggle('expanded', isOpen);
     }
 
+    function deletePost(id){
+      var posts = loadPosts().filter(function(p){ return p.id !== id; });
+      saveToStorage(posts);
+      renderPosts();
+    }
+
+    function confirmClearAll(){
+      if(!confirm('Remove all your custom posts? Seeded posts stay.')) return;
+      var posts = loadPosts().filter(function(p){ return p.seeded; });
+      saveToStorage(posts);
+      renderPosts();
+    }
 
     // ── Topic filter ──
     document.getElementById('topicsRow').addEventListener('click', function(e){
@@ -348,6 +464,97 @@
       renderPosts();
     });
 
+    // ── Compose modal ──
+    function openCompose(){
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postNotes').value = '';
+      document.getElementById('postBody').value = '';
+      document.getElementById('bodyGroup').style.display = 'none';
+      document.getElementById('aiLoading').style.display = 'none';
+      document.getElementById('aiExpandBtn').disabled = false;
+      document.getElementById('composeModal').classList.add('open');
+    }
+
+    function closeCompose(){
+      document.getElementById('composeModal').classList.remove('open');
+    }
+
+    document.getElementById('composeModal').addEventListener('click', function(e){
+      if(e.target === this) closeCompose();
+    });
+
+    // ── Tone select ──
+    document.getElementById('toneRow').addEventListener('click', function(e){
+      var btn = e.target.closest('.tone-btn');
+      if(!btn) return;
+      document.querySelectorAll('.tone-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      selectedTone = btn.dataset.tone;
+    });
+
+    // ── AI Expand ──
+    async function aiExpand(){
+      var title = document.getElementById('postTitle').value.trim();
+      var notes = document.getElementById('postNotes').value.trim();
+      var category = document.getElementById('postCategory').value;
+      if(!title && !notes){ alert('Add a title or some notes first.'); return; }
+      document.getElementById('aiExpandBtn').disabled = true;
+      document.getElementById('aiLoading').style.display = 'flex';
+      document.getElementById('bodyGroup').style.display = 'none';
+      var prompt = 'You are Nahum Karisa, a DevOps and Cybersecurity professional based in Nairobi with 8+ years in enterprise IT including 6 years at the UN. Write a blog post in a ' + selectedTone + ' tone for a technical audience.\n\nPost title: ' + (title || 'Untitled') + '\nCategory: ' + category + '\nNotes / key points:\n' + (notes || '(no notes — improvise based on the title and your expertise)') + '\n\nWrite 3-4 paragraphs of real, practical, opinionated content. Do NOT use bullet points or headers. Write in first person. Sound like someone who has actually done this work. No filler, no generic advice. Start directly with the content — no preamble.';
+      try {
+        var res = await fetch('https://api.anthropic.com/v1/messages', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            model:'claude-sonnet-4-20250514',
+            max_tokens:1000,
+            messages:[{role:'user', content: prompt}]
+          })
+        });
+        var data = await res.json();
+        var text = (data.content||[]).filter(function(b){ return b.type==='text'; }).map(function(b){ return b.text; }).join('');
+        document.getElementById('postBody').value = text;
+        document.getElementById('bodyGroup').style.display = 'flex';
+      } catch(err){
+        alert('AI expand failed. You can still write the body manually below.');
+        document.getElementById('bodyGroup').style.display = 'flex';
+      }
+      document.getElementById('aiLoading').style.display = 'none';
+      document.getElementById('aiExpandBtn').disabled = false;
+    }
+
+    // ── Publish ──
+    function publishPost(){
+      var title = document.getElementById('postTitle').value.trim();
+      var category = document.getElementById('postCategory').value;
+      var notes = document.getElementById('postNotes').value.trim();
+      var body = document.getElementById('postBody').value.trim();
+      var aiGenerated = document.getElementById('bodyGroup').style.display !== 'none' && body.length > 0;
+      if(!title){ alert('Please add a title.'); return; }
+      var finalBody = body || notes;
+      if(!finalBody){ alert('Please add some content or notes.'); return; }
+      var now = new Date();
+      var post = {
+        id: 'post-' + Date.now(),
+        title: title,
+        category: category,
+        date: now.toLocaleDateString('en-GB', {month:'short', year:'numeric'}),
+        aiGenerated: aiGenerated,
+        excerpt: finalBody.substring(0, 200) + (finalBody.length > 200 ? '…' : ''),
+        body: finalBody,
+        readTime: readTime(finalBody),
+        seeded: false
+      };
+      var posts = loadPosts();
+      posts.push(post);
+      saveToStorage(posts);
+      closeCompose();
+      activeTopic = 'all';
+      document.querySelectorAll('.topic-tag').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelector('.topic-tag[data-topic="all"]').classList.add('active');
+      renderPosts();
+    }
 
     // ── Init ──
     renderPosts();
