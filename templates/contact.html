@@ -66,8 +66,23 @@
     .btn-submit{width:100%;padding:14px;background:var(--ink);color:#fff;border:1.5px solid var(--ink);border-radius:3px;font-size:0.88rem;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .25s;letter-spacing:0.06em;text-transform:uppercase}
     .btn-submit:hover{background:transparent;color:var(--ink)}
 
+    /* Rate card */
+    .rates-section{max-width:1280px;margin:0 auto;padding:0 3.5rem 5rem}
+    .rates-card{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2.75rem 3rem}
+    .rates-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+    .rates-head h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;letter-spacing:-0.01em}
+    .rates-head p{font-size:0.85rem;color:var(--ink3);font-weight:300}
+    .rates-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+    .rate-col-title{font-size:0.7rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border)}
+    .rate-row{display:flex;justify-content:space-between;gap:1rem;padding:0.55rem 0;font-size:0.9rem;border-bottom:1px solid var(--border)}
+    .rate-row:last-child{border-bottom:none}
+    .rate-row span:first-child{color:var(--ink2);font-weight:300}
+    .rate-row span:last-child{color:var(--ink);font-weight:500;white-space:nowrap}
+    .rates-terms{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.78rem;color:var(--ink3);letter-spacing:0.02em}
+    @media(max-width:640px){.rates-section{padding:0 1.25rem 3rem}.rates-card{padding:1.75rem}.rates-grid{grid-template-columns:1fr;gap:1.75rem}}
+
     footer{max-width:1280px;margin:0 auto;padding:2.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--ink3);letter-spacing:0.04em}
-    @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header,.flash-messages{padding-left:1.5rem;padding-right:1.5rem}.content{grid-template-columns:1fr;padding:3rem 1.5rem;gap:3rem}footer{flex-direction:column;gap:0.5rem}}
+    @media(max-width:960px){nav{padding:0 1.5rem}.nav-links{gap:1.5rem}.page-header,.flash-messages{padding-left:1.5rem;padding-right:1.5rem}.content{grid-template-columns:1fr;padding:3rem 1.5rem;gap:3rem}.rates-section{padding:0 1.5rem 3.5rem}footer{flex-direction:column;gap:0.5rem}}
   
     [data-theme="dark"]{--ink:#e8e8f0;--ink2:#b8b8cc;--ink3:#7a7a90;--surface:#0e0e18;--surface2:#181824;--border:rgba(255,255,255,0.08);--gold:#d4a84c;--gold2:#e8c97a}
     [data-theme="dark"] body{background:#0e0e18 !important;background-image:radial-gradient(ellipse 80% 60% at 20% 0%, rgba(201,168,76,0.08) 0%, transparent 60%) !important}
@@ -324,6 +339,37 @@
           </div>
           <button type="submit" class="btn-submit">Send message →</button>
         </form>
+      </div>
+    </div>
+
+    <div class="rates-section reveal">
+      <div class="rates-card">
+        <div class="rates-head">
+          <h2>Rate card</h2>
+          <p>Ballpark pricing — final quotes scale with scope.</p>
+        </div>
+        <div class="rates-grid">
+          <div>
+            <div class="rate-col-title">Hourly rates</div>
+            <div class="rate-row"><span>General sysadmin</span><span>$50/hr</span></div>
+            <div class="rate-row"><span>Scripting &amp; automation</span><span>$50/hr</span></div>
+            <div class="rate-row"><span>Network setup</span><span>$30/hr</span></div>
+            <div class="rate-row"><span>SIEM &amp; monitoring</span><span>$50/hr</span></div>
+            <div class="rate-row"><span>Incident response</span><span>$50/hr</span></div>
+            <div class="rate-row"><span>Training &amp; documentation</span><span>$40/hr</span></div>
+            <div class="rate-row"><span>PC maintenance</span><span>$100/hr</span></div>
+            <div class="rate-row"><span>IAM &amp; SSO</span><span>Custom quote</span></div>
+            <div class="rate-row"><span>Web app maintenance</span><span>Custom quote</span></div>
+          </div>
+          <div>
+            <div class="rate-col-title">Flat fees</div>
+            <div class="rate-row"><span>MFA rollout</span><span>$5/user</span></div>
+            <div class="rate-row"><span>Backup solution setup</span><span>$150</span></div>
+            <div class="rate-row"><span>Website setup</span><span>$250</span></div>
+            <div class="rate-row"><span>AD migration (base)</span><span>$300</span></div>
+          </div>
+        </div>
+        <div class="rates-terms">50% upfront, 50% on completion · Quote valid 14 days</div>
       </div>
     </div>
   </main>
